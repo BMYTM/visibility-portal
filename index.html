@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Visibility Desk</title>
+<meta name="theme-color" content="#8e1330">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Mukta:wght@400;600;700&family=Noto+Sans+Thai:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE a friendly phone app for a busy boutique owner: one thing at a time, plain words
+   IDEA a bridal trousseau box: crimson lid, zari-gold trim, ivory cards inside
+   PICTURE the Today screen: progress ring and today's steps as big tappable cards
+   COLOUR ivory ground, bridal crimson app bar, zari gold for done, marigold for due
+   TYPE Rozha One for titles, Mukta + Noto Sans Thai for text
+   LAYOUT app bar, one column of cards (max 680px), bottom tab bar: Today, Plan, Write, Tools, Progress */
+:root{color-scheme:light dark;--bg:light-dark(#faf6f3,#120a0d);--card:light-dark(#ffffff,#1d1115);--ink:light-dark(#1f1215,#f4ebe6);--soft:light-dark(#6b5458,#c3b0aa);--line:light-dark(#eddcd5,#36222a);--tint:light-dark(#fbf1ec,#26161b);--crim:#8e1330;--crimd:#6d0e25;--acc:light-dark(#8e1330,#e8b54e);--gold:#d9a93a;--mari:#f29f05;--onc:#fff7f0;--sh:0 1px 2px rgba(60,20,30,.06),0 4px 14px rgba(60,20,30,.06)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 Mukta,"Noto Sans Thai",system-ui,sans-serif;overflow-x:clip;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+h1,h2{font-family:"Rozha One",Georgia,serif;font-weight:400;line-height:1.1;margin:0;text-wrap:balance}
+h2{font-size:26px}h3{font-size:17px;margin:0;line-height:1.3}
+a{color:inherit}
+.bar{background:var(--crim);color:var(--onc);padding:calc(14px + env(safe-area-inset-top)) max(4vw,16px) 16px;border-bottom:4px solid var(--gold)}
+.bar .in{max-width:680px;margin:0 auto;display:flex;align-items:center;gap:14px}
+.bar small{display:block;font-size:13px;opacity:.85}
+.bar h1{font-size:clamp(24px,6vw,32px)}
+.ring{flex:none;width:58px;height:58px;position:relative;margin-left:auto}#gear+.ring{margin-left:0}
+.ring svg{width:58px;height:58px;transform:rotate(-90deg)}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:13px;line-height:1.05;text-align:center}
+main{max-width:680px;margin:0 auto;padding:16px max(4vw,14px) 24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:var(--sh)}
+.hero{background:linear-gradient(160deg,#fffaf5,#fbeee6);color:#1f1215;border:2px solid var(--gold)}
+:root[data-theme=dark] .hero{background:linear-gradient(160deg,#2a1419,#1d1115);color:var(--ink)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .hero{background:linear-gradient(160deg,#2a1419,#1d1115);color:var(--ink)}}
+.eyebrow{font-size:14px;font-weight:700;color:var(--acc)}
+.muted{color:var(--soft);font-size:14px}
+.beads{display:grid;grid-template-columns:repeat(30,minmax(0,1fr));gap:3px;margin-top:12px}
+.beads i{height:10px;border-radius:5px;background:var(--line)}.beads i.d{background:var(--gold)}.beads i.t{background:var(--mari);outline:2px solid #fff3d6}
+.sec{font-size:15px;font-weight:700;color:var(--soft);margin:18px 4px 8px}
+.task{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:10px;box-shadow:var(--sh);overflow:hidden}
+.task.due{border-left:5px solid var(--mari)}.task.done{opacity:.78}
+.th{display:grid;grid-template-columns:48px minmax(0,1fr) 28px;gap:10px;align-items:center;padding:12px 12px 12px 10px;cursor:pointer}
+.tick{width:44px;height:44px;border-radius:50%;border:2px solid var(--line);background:var(--card);display:grid;place-items:center;cursor:pointer;padding:0;color:transparent;font-size:20px;font-weight:700}
+.tick.on{background:var(--gold);border-color:var(--gold);color:#2a1a08}
+.tick:focus-visible,button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.task.done h3{text-decoration:line-through;text-decoration-color:var(--gold)}
+.meta{font-size:13px;color:var(--soft);margin-top:2px}
+.who{font-weight:700;color:var(--acc)}
+.chev{width:24px;height:24px;transition:transform .2s;color:var(--soft)}
+.task.open .chev{transform:rotate(180deg)}
+.tb{padding:0 16px 16px;border-top:1px solid var(--line)}
+.tb ol{margin:12px 0 0;padding-left:22px}.tb ol li{margin:6px 0}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:4px 12px;border-radius:18px;border:1px solid var(--line);background:var(--tint);font-weight:600;font-size:14px;text-decoration:none;color:var(--ink);cursor:pointer}
+.chip.on{background:var(--crim);color:var(--onc);border-color:var(--crim)}
+.cp{margin-top:12px;border:1px solid var(--line);border-radius:12px;background:var(--tint);padding:12px}
+.cp b{font-size:14px}.cp pre{white-space:pre-wrap;overflow-wrap:anywhere;font:15px/1.55 Mukta,"Noto Sans Thai",sans-serif;margin:6px 0 8px}
+textarea,input,select{font:16px Mukta,"Noto Sans Thai",sans-serif;width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink)}
+textarea{min-height:64px;margin-top:12px}
+label{display:grid;gap:4px;font-weight:600;font-size:15px}
+button{font:700 15px Mukta,"Noto Sans Thai",sans-serif;min-height:44px;padding:8px 18px;border-radius:22px;border:1.5px solid var(--crim);background:var(--crim);color:var(--onc);cursor:pointer}
+button.gh{background:transparent;color:var(--ink);border-color:var(--line)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.seg{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-bottom:12px;padding-bottom:2px}
+.seg .chip{white-space:nowrap}
+.form{display:grid;gap:12px}
+.out pre{white-space:pre-wrap;overflow-wrap:anywhere;font:16px/1.6 Mukta,"Noto Sans Thai",sans-serif;margin:8px 0 12px;min-height:80px}
+.kpi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.kpi div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:var(--sh)}
+.kpi b{display:block;font:400 30px "Rozha One",serif;line-height:1.1}.kpi span{font-size:13px;color:var(--soft)}
+.prow{display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.prow:last-child{border-bottom:0}
+.pbar{height:12px;background:var(--tint);border-radius:6px;overflow:hidden}.pbar i{display:block;height:100%;background:var(--gold)}
+.prow b{white-space:nowrap;font-variant-numeric:tabular-nums}
+.tool{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;align-items:start}
+.ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font:700 16px Mukta,sans-serif;color:#fff}
+.tool p{margin:4px 0 0;font-size:15px}
+.acct{font-size:14px;margin-top:6px}.acct b{color:var(--acc)}
+.ok{display:inline-flex;align-items:center;gap:8px;min-height:40px;font-weight:600;font-size:14px;cursor:pointer}
+.ok input{width:22px;height:22px;min-height:0;accent-color:var(--crim)}
+.rule{background:var(--crim);color:var(--onc);border:0}
+.rule ul{margin:8px 0 0;padding-left:20px}
+.st{font-size:12px;font-weight:700;border-radius:12px;padding:2px 10px;background:var(--tint);border:1px solid var(--line);white-space:nowrap}
+.st.Approved{background:var(--gold);color:#2a1a08;border-color:var(--gold)}.st.Sent{background:var(--crim);color:var(--onc);border-color:var(--crim)}
+.ob{border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px;display:grid;gap:8px}
+.ob textarea{min-height:140px;margin:0}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -4px 16px rgba(60,20,30,.06)}
+nav.tabs .in{max-width:680px;margin:0 auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
+nav.tabs a{display:grid;justify-items:center;gap:2px;padding:8px 2px 6px;min-height:60px;text-decoration:none;color:var(--soft);font-size:12px;font-weight:600}
+nav.tabs a svg{width:24px;height:24px}
+nav.tabs a[aria-current]{color:var(--acc)}
+nav.tabs a[aria-current] svg{transform:translateY(-1px)}
+.sync{font-size:13px;color:var(--soft);text-align:center;margin:8px 0}
+#toast{position:fixed;left:50%;bottom:calc(88px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#1f1215;color:#fff7f0;padding:10px 16px;border-radius:12px;font-size:15px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:20}
+#toast.on{opacity:1}
+@media(prefers-reduced-motion:reduce){.chev,#toast{transition:none}}
+</style>
+</head>
+<body>
+<header class="bar"><div class="in"><div><small id="brand">Neena Sehgal · 30-day plan</small><h1 id="ttl">Today</h1></div><a id="gear" class="hidden" href="#admin" aria-label="Settings" style="color:var(--onc);display:grid;place-items:center;width:44px;height:44px;margin-left:auto"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></a><div class="ring" aria-label="Steps done"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,240,230,.25)" stroke-width="4"/><circle id="rg" cx="18" cy="18" r="15" fill="none" stroke="#d9a93a" stroke-width="4" stroke-linecap="round" stroke-dasharray="0 100" pathLength="100"/></svg><b id="rgt">0/23</b></div></div></header>
+<main id="main"></main>
+<div class="sync" id="sync">Ticks are saved on this device.</div>
+<nav class="tabs" aria-label="App sections"><div class="in" id="tabs">
+<a href="#today"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/><circle cx="12" cy="12" r="4"/></svg>Today</a>
+<a href="#plan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="16" rx="3"/><path d="M8 3v4M16 3v4M4 10h16M8 14l2 2 4-4"/></svg>Plan</a>
+<a href="#write"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>Write</a>
+<a href="#tools"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>Tools</a>
+<a href="#progress"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Progress</a>
+</div></nav>
+<div id="toast" role="status"></div>
+<script>
+{
+let LIB={
+masterEN:["Shop description (English)","Neena Sehgal is an Indian bridal couture boutique in Bangkok, designing bridal lehengas, sherwanis, sarees and custom wedding outfits since 1989. DS Tower 1, Soi Phrom Chit, Sukhumvit Soi 39."],
+masterTH:["Shop description (Thai)","Neena Sehgal ห้องเสื้อชุดอินเดียสำหรับงานแต่งงานในกรุงเทพฯ ออกแบบชุดเจ้าสาวเลเฮงก้า ชุดเชอร์วานีเจ้าบ่าว ส่าหรี และชุดงานแต่งตัดตามสั่ง ตั้งแต่ปี 1989 อาคาร DS Tower 1 ซอยพร้อมจิต สุขุมวิท 39"],
+igbio:["Instagram bio","Indian bridal couture since 1989\nLehengas · Sherwanis · Sarees · Custom\nDS Tower 1, Sukhumvit 39, Bangkok\nWhatsApp 086 086 8385 · Mon–Sat 10–6"],
+fbintro:["Facebook intro","Indian bridal couture since 1989 · Lehengas, sherwanis, sarees · Sukhumvit 39, Bangkok"],
+fbabout:["Facebook About (Thai)","ห้องเสื้อ Neena Sehgal ออกแบบและตัดเย็บชุดอินเดียสำหรับงานแต่งงานมาตั้งแต่ปี 1989 ทั้งชุดเจ้าสาวเลเฮงก้า ชุดเชอร์วานีเจ้าบ่าว ส่าหรี และชุดสำหรับแขกในงาน รับออกแบบตามสั่งและจัดส่งต่างประเทศ\nอาคาร DS Tower 1 ซอยพร้อมจิต สุขุมวิท 39 กรุงเทพฯ (มีที่จอดรถ)\nเปิดจันทร์–เสาร์ 10.00–18.00 น. นัดลองชุดทาง WhatsApp / โทร 086 086 8385"],
+longdesc:["Long description: Google, WedMeGood, Tripadvisor","Neena Sehgal is an Indian bridal couture boutique in Bangkok, creating wedding outfits since 1989. We design and make bridal lehengas, sherwanis for grooms, sarees, anarkalis and Indo-Western looks, plus outfits for the whole wedding party. Choose a ready-to-wear piece or a fully custom bridal outfit (allow about 8 weeks). We dress brides from Bangkok's Indian community and couples planning destination weddings in Thailand, and we ship abroad. Visit our studio at DS Tower 1, Soi Phrom Chit, Sukhumvit Soi 39, with parking available. Fittings by appointment, Monday to Saturday."],
+reviewEN:["Review request (English)","Hi {name}, thank you for choosing Neena Sehgal for your wedding. If you loved your outfit, a short Google review would mean a lot to our team and helps other brides find us: {Google review link}\nIf you share photos, please tag @neenasehgal_official. Thank you!"],
+reviewTH:["Review request (Thai)","สวัสดีค่ะ คุณ{ชื่อ} ขอบคุณที่ไว้วางใจให้ Neena Sehgal ดูแลชุดในวันสำคัญนะคะ ถ้าประทับใจ รบกวนช่วยเขียนรีวิวสั้น ๆ บน Google ให้หน่อยนะคะ จะช่วยให้เจ้าสาวคนอื่นหาเราเจอง่ายขึ้น {ลิงก์รีวิว}\nถ้าโพสต์รูป ฝากแท็ก @neenasehgal_official ด้วยนะคะ ขอบคุณมากค่ะ"],
+permission:["Real-wedding permission message","Hi {name}, your wedding looked beautiful! We'd love to share it as a 'real wedding' on WedMeGood or WeddingSutra, with your outfits credited to Neena Sehgal. May we use your photos, and could you share your photographer's name so we credit them too? Only if you're happy to. Thank you!"]
+};
+let TOOLS=[
+{id:"portal",n:"This app",c:"#8e1330",l:"N",f:"Tick steps, write notes, get captions, approve emails, see progress.",a:"No account needed. Open the link on your phone and add it to your home screen.",cost:"Free",u:""},
+{id:"instagram",n:"Instagram",c:"#c13584",l:"IG",f:"Posts, bio, Highlights, replying to DMs.",a:"Shop account @neenasehgal_official, switched to Business.",cost:"Free",u:"https://www.instagram.com/"},
+{id:"mbs",n:"Meta Business Suite",c:"#1877f2",l:"M",f:"Post to Instagram and Facebook together, schedule the week's posts, one inbox for all messages, merge the two Facebook pages.",a:"The shop's own Facebook page, with the owner as admin.",cost:"Free app",u:"https://business.facebook.com/"},
+{id:"gbp",n:"Google Business Profile",c:"#34a853",l:"G",f:"Address, hours, photos, review link, replying to Google reviews.",a:"The shop's own Google account that manages the listing.",cost:"Free",u:"https://business.google.com/"},
+{id:"wab",n:"WhatsApp Business",c:"#25d366",l:"W",f:"Quick reply '/review' after every delivery, labels for brides, catalogue of outfits.",a:"Shop number 086 086 8385.",cost:"Free app",u:"https://business.whatsapp.com/"},
+{id:"line",n:"LINE Official Account",c:"#06c755",l:"L",f:"Same review message and broadcasts, if the shop uses LINE.",a:"Shop's LINE OA (only if you already use one).",cost:"Free plan",u:"https://manager.line.biz/"},
+{id:"canva",n:"Canva",c:"#00c4cc",l:"C",f:"Carousel posts, story Highlight covers, the planner lookbook.",a:"Shop's own free Canva account.",cost:"Free",u:"https://www.canva.com/"},
+{id:"ai",n:"ChatGPT or Claude",c:"#10a37f",l:"AI",f:"Longer posts, ideas, Thai/English translation. In Write, press 'Copy prompt' and paste it in.",a:"The owner's own free account.",cost:"Free (paid optional)",u:"https://chatgpt.com/"},
+{id:"gmail",n:"Shop email",c:"#ea4335",l:"@",f:"Send the Masala Thai pitch and the wedding-planner emails.",a:"The shop's own mailbox.",cost:"Free",u:"https://mail.google.com/"},
+{id:"trip",n:"Tripadvisor",c:"#00af87",l:"T",f:"Replace the 'online garment boutique' description, set hours.",a:"Shop's Tripadvisor owner login.",cost:"Free",u:"https://www.tripadvisor.com/Owners"},
+{id:"wmg",n:"WedMeGood",c:"#e72e77",l:"WG",f:"Description, new photos, ask for reviews, submit real weddings.",a:"Shop's WedMeGood vendor login.",cost:"Free basic",u:"https://www.wedmegood.com/"},
+{id:"bing",n:"Bing Places",c:"#008373",l:"B",f:"Copy the Google listing to Bing — ChatGPT's web search leans on Bing.",a:"Sign in with the shop's own Microsoft or Google account.",cost:"Free",u:"https://www.bingplaces.com/"}
+];
+let TL=Object.fromEntries(TOOLS.map(t=>[t.id,t]));
+const T=(id,d,t,m,who,tools,steps,copy=[])=>({id,d,t,m,who,tools,steps,copy});
+let TASKS=[
+T("t01",1,"Check the shop details",10,"You",[],["Read these five details: address DS Tower 1, Soi Phrom Chit, Sukhumvit Soi 39 · hours Monday to Saturday 10:00 to 18:00, closed Sunday · WhatsApp 086 086 8385 · in business since 1989 · about 8 weeks for a custom bridal outfit.","If anything is wrong, write the right version in the notes box below.","Tick done. Boonchoo corrects the ready text if needed."]),
+T("t02",1,"Approve the shop description",5,"You",[],["Read the English and Thai description below. This same line goes on every listing.","Write any changes in the notes box, or leave it empty if it's right.","Tick done."],["masterEN","masterTH"]),
+T("t03",2,"Instagram: switch to a business account",10,"You",["instagram"],["Open Instagram, go to your profile and tap the menu (three lines, top right).","Tap Settings and activity, then Account type and tools, then Switch to professional account. If you see 'Professional dashboard' on your profile already, skip to step 4.","Choose Business, and pick the category Bridal shop (or Clothing store if Bridal shop isn't offered).","Tick done."]),
+T("t04",2,"Instagram: new bio and contact buttons",15,"You",["instagram"],["Profile > Edit profile > Bio. Delete the old bio and paste the new one below.","In Edit profile, open Contact options: add phone 086 086 8385 (as WhatsApp if offered), the shop email and the address DS Tower 1, Sukhumvit Soi 39, Bangkok.","Save, then look at the profile from another phone to check it reads well.","Tick done."],["igbio"]),
+T("t05",3,"Facebook: merge the two pages",15,"You",["mbs"],["Check you are an admin of both Facebook pages, and that both show the same name, category and address (Soi 39). Fix any difference first.","On a computer, go to facebook.com/pages/merge (or business.facebook.com/pages/merge if both pages are in Meta Business Suite).","Choose the main page to keep (the one with about 8,300 followers), then the duplicate, and request the merge. Facebook says it can't be undone and usually takes 24 to 48 hours.","Only likes, check-ins and ratings move across; posts on the duplicate don't. If Facebook refuses, post once on the duplicate asking people to follow the main page, then unpublish it.","Tick done and note what happened."]),
+T("t06",3,"Facebook: fill in the page details",20,"You",["mbs"],["On the main page, open Edit details (or Settings > Page setup).","Category: Bridal shop. Address: DS Tower 1, Soi Phrom Chit, Sukhumvit Soi 39. Hours: Monday to Saturday 10:00 to 18:00.","Add phone and a WhatsApp button, and link the Instagram account.","Paste the intro and the Thai About text below.","Tick done."],["fbintro","fbabout"]),
+T("t07",4,"Google: fix address, hours and description",20,"You",["gbp"],["Sign in to the Google account that manages the shop, then search Google for Neena Sehgal Bangkok.","In the profile panel choose Edit profile.","Location: change to DS Tower 1, Soi Phrom Chit, Sukhumvit Soi 39 (it shows Soi 33 now). Google may ask you to verify again; follow its steps.","Hours: Monday to Saturday 10:00 to 18:00, Sunday closed. Category: Bridal shop.","Description: paste the long description below. Tick done."],["longdesc"]),
+T("t08",4,"Google: add photos and get the review link",10,"You",["gbp"],["In the same profile, add 10 recent photos: shop front, studio, six outfits, a fitting.","Find Ask for reviews (or Get more reviews), copy the link and paste it in the notes box.","Tick done. Boonchoo puts the link into the review message."]),
+T("t09",5,"Tripadvisor and WedMeGood: replace the description",30,"You",["trip","wmg"],["Tripadvisor: sign in as the owner, open your listing's management page and replace 'Online Indian garment boutique' with the long description below. Set the hours.","WedMeGood: sign in to the vendor account, edit the profile: paste the same description, add your best new photos, check prices and contact.","Tick done."],["longdesc"]),
+T("t10",5,"Bing Places listing",15,"You + Boonchoo",["bing"],["Bing is Microsoft's map listing, and ChatGPT's web search leans on it.","Sign in at Bing Places with the shop's own Microsoft or Google account (do this after Day 4). Boonchoo can sit with you.","Choose Import from Google Business Profile and confirm the details.","If a verification code arrives by phone or post, enter it. Tick done."]),
+T("t11",6,"Instagram Highlights",20,"You",["instagram","canva"],["Post a story for each of: Bridal, Groom & sherwani, Sarees, Real brides, Visit us (map, hours, WhatsApp).","On your profile, tap New (+) under Highlights and save each story into its own Highlight with that name.","Optional: make matching Highlight covers in Canva. Tick done."]),
+T("t12",8,"Set up the review message for staff",10,"You + staff",["wab","line"],["In WhatsApp Business: Settings > Business tools > Quick replies > Add. Shortcut: review. Paste the message below and put the Google review link (Day 4) in place of {Google review link}.","Do the same in LINE if you use it.","Agree with staff: send it to every bride on delivery day. Tick done."],["reviewEN","reviewTH"]),
+T("t13",8,"This week's posts: Mon, Wed, Fri",45,"You",["writer","mbs","instagram"],["For each post, open the Write tab: choose the outfit, add colour, fabric and occasion, press Write it.","Check the details, then post the photo with the caption from Meta Business Suite so it goes to Instagram and Facebook together (you can schedule all three at once).","Tag the photographer, planner and venue if you know them. Tick done after the third post."]),
+T("t14",9,"Masala Thai feature",15,"You + Boonchoo",["gmail"],["Masala Thai is Bangkok's Indian community magazine. Its list of Bangkok designers shows up in 14 of the 17 searches and doesn't include Neena Sehgal yet.","The pitch email is ready in Write › Emails. Read it, change anything you like, and press Approve.","Send it from the shop's email with your 5 best photos attached (bride, groom, family look, a sketch, the studio), then press Mark as sent.","Tick done. Boonchoo reminds you to follow up a week later."]),
+T("t15",11,"Lookbook and wedding-planner messages",20,"You + Boonchoo",["canva","wab","gmail"],["Choose 12 photos that show your range: bridal, groom, family, guest, and send them to Boonchoo.","Boonchoo makes a one-page lookbook (in the shop's Canva) and puts the planner message in Write › Emails.","Send it to the seven Bangkok planners from the shop's WhatsApp or email.","Tick done."]),
+T("t16",15,"This week's posts: Mon, Wed, Fri",45,"You",["writer","mbs","instagram"],["Same as last week: Write tab, then post from Meta Business Suite to Instagram and Facebook, and tag.","Tick done after the third post."]),
+T("t17",16,"Ask two brides for a real-wedding feature",15,"You",["wab"],["Pick two recent weddings with good photos.","Send the message below to each couple from the shop's WhatsApp.","Note in the box: couple, wedding date, venue, planner, photographer. Tick done."],["permission"]),
+T("t18",18,"Submit the real weddings",30,"You + Boonchoo",["wmg"],["Sign in to the shop's WedMeGood vendor account, and open WeddingSutra's real-wedding submission. Boonchoo can sit with you.","Fill in 'Outfits: Neena Sehgal, Bangkok' and upload the photos the couples agreed to.","Tick done when submitted."]),
+T("t19",20,"Reply to every review",15,"You",["writer","gbp","mbs"],["Open Write › Reviews: drafted replies for review sites are waiting there.","For each new Google review or Facebook recommendation, paste it in Write › Reviews, press Write it, check, copy and post it from that site. Reply to the unhappy ones too, calmly.","Tick done."]),
+T("t20",22,"This week's posts: Mon, Wed, Fri",45,"You",["writer","mbs","instagram"],["Same routine: Write tab, post from Meta Business Suite, tag.","Tick done after the third post."]),
+T("t21",25,"Count the new reviews",5,"You",["gbp","wmg"],["Count new Google reviews since 16 November and new WedMeGood reviews.","Write both numbers in the notes box. Targets: 5 Google, 3 WedMeGood. Tick done."]),
+T("t22",29,"ChatGPT check",60,"Boonchoo",[],["Boonchoo asks ChatGPT the 17 searches in fresh sessions and records whether Neena Sehgal is named.","The result appears in Progress."]),
+T("t23",30,"30-day review together",20,"You + Boonchoo",[],["Look at Progress and the ticks together.","Decide what to keep doing and what's next for the following 30 days. Tick done."])
+];
+let SHOP={name:"Neena Sehgal",owner:"Neena",adviser:"Boonchoo",type:"Indian bridal couture boutique",city:"Bangkok",area:"Sukhumvit 39",address:"DS Tower 1, Soi Phrom Chit, Sukhumvit Soi 39, Bangkok",hours:"Monday to Saturday 10:00–18:00",whatsapp:"086 086 8385",phone:"02 258 1578",instagram:"neenasehgal_official",since:"1989",leadTime:"about 8 weeks",products:"bridal lehengas, sherwanis, sarees and custom wedding outfits",hashtags:"#BangkokBride #IndianWeddingThailand #NeenaSehgal",kinds:"Bridal lehenga, Sherwani, Saree, Anarkali, Indo-Western outfit, Wedding guest outfit, Kids' outfit",brand:"#8e1330",accent:"#d9a93a"};
+let PLAN={title:"30-day plan",start:"2026-11-16",days:30,baseline:{date:"14 Nov",appears:9,top:1},targets:["Found in 11 of the searches | search:11","One Facebook page | task:t05","5 new Google reviews | ","3 new WedMeGood reviews | ","Masala Thai pitch sent | outbox:masala"]};
+let SEARCH={phrases:["Best Indian clothing shop in Bangkok","Bridal lehengas in Thailand","Premium Indian wedding outfit Bangkok","Luxury bridal lehenga Bangkok","Indian bridal boutique Bangkok","Custom bridal lehenga Thailand","Designer Indian clothes Bangkok","Indian wedding clothes Bangkok","Sherwani Bangkok","Indian wedding guest outfit Bangkok","Designer saree Bangkok","Indian wedding clothing Sukhumvit","Indian wedding outfits Phuket","Indian wedding outfits Pattaya","Indo-Western wedding dress Thailand","Indian wedding outfits for men Bangkok","Where to buy lehenga in Bangkok"]};
+const DEFAULTS=JSON.parse(JSON.stringify({shop:SHOP,plan:PLAN,search:SEARCH,tasks:TASKS,lib:LIB,tools:TOOLS}));
+let SET={};
+let WEEKS=[],D0=new Date(2026,10,16),ND=30,tn=1;
+const dt=d=>new Date(D0.getTime()+(d-1)*864e5);
+const NS=()=>SEARCH.phrases.length||17;
+const fd=d=>dt(d).toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'});
+const now=new Date();
+function applySettings(){
+ const d=DEFAULTS,c=o=>JSON.parse(JSON.stringify(o));
+ SHOP={...c(d.shop),...(SET.shop||{})};PLAN={...c(d.plan),...(SET.plan||{})};
+ SEARCH=SET.search&&Array.isArray(SET.search.phrases)&&SET.search.phrases.length?SET.search:c(d.search);
+ const nt=t=>({id:String(t.id),d:+t.d||1,t:String(t.t||'Step'),m:+t.m||10,who:String(t.who||'You'),tools:Array.isArray(t.tools)?t.tools:[],steps:Array.isArray(t.steps)?t.steps:[],copy:Array.isArray(t.copy)?t.copy:[]});
+ TASKS=(SET.tasks&&Array.isArray(SET.tasks.items)?SET.tasks.items:c(d.tasks)).map(nt).sort((a,b)=>a.d-b.d||a.id.localeCompare(b.id));
+ LIB=SET.lib&&SET.lib.items&&typeof SET.lib.items==='object'?SET.lib.items:c(d.lib);
+ TOOLS=SET.tools&&Array.isArray(SET.tools.items)?SET.tools.items:c(d.tools);TL=Object.fromEntries(TOOLS.map(t=>[t.id,t]));
+ TASKS.forEach(t=>{t.copy=t.copy.filter(k=>LIB[k]);t.tools=t.tools.filter(k=>k==='writer'||TL[k])});
+ const sd=/^\d{4}-\d{2}-\d{2}$/.test(PLAN.start)?PLAN.start.split('-').map(Number):[2026,11,16];D0=new Date(sd[0],sd[1]-1,sd[2]);
+ ND=Math.max(1,Math.min(120,+PLAN.days||30));
+ tn=Math.floor((new Date(now.getFullYear(),now.getMonth(),now.getDate())-D0)/864e5)+1;
+ WEEKS=[["All",1,ND]];for(let a=1,w=1;a<=ND;a+=7,w++){const b=Math.min(a+6,ND);WEEKS.push([b-a<6&&w>1?`Days ${a}–${b}`:`Week ${w}`,a,b])}
+ const r=document.documentElement.style;if(/^#[0-9a-f]{6}$/i.test(SHOP.brand))r.setProperty('--crim',SHOP.brand);if(/^#[0-9a-f]{6}$/i.test(SHOP.accent))r.setProperty('--gold',SHOP.accent);
+ $('brand').textContent=`${SHOP.name} · ${PLAN.title}`;document.title=`${SHOP.name} ${PLAN.title}`;
+}
+const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const $=id=>document.getElementById(id);
+let undoFn=null;
+const toast=(m,undo)=>{const t=$('toast');undoFn=undo||null;t.innerHTML=esc(m)+(undo?' <button type="button" id="undo" class="gh" style="min-height:32px;padding:2px 12px;margin-left:8px;color:#fff7f0;border-color:#fff7f0">Undo</button>':'');t.style.pointerEvents=undo?'auto':'none';t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>{t.classList.remove('on');t.style.pointerEvents='none';undoFn=null},undo?5000:2000)};
+let ro=false;const denied=e=>{if(e&&e.code==='invalid_argument'){ro=true;render(true)}};
+let st={};try{st=JSON.parse(localStorage.getItem('ns30')||'{}')}catch(e){st={}}
+const keep=()=>{try{localStorage.setItem('ns30',JSON.stringify(st))}catch(e){}};
+let dbr=null,checks=null,cfg={},ob=[],acc={},posts=[],replies=[],integ={},week=0,wmode='week',open=new Set(),lastOut='',lastAsk='',pending=false;
+const isDone=id=>!!(st[id]||{}).done;
+const doneN=()=>TASKS.filter(t=>isDone(t.id)).length;
+const cpBlock=id=>`<div class="cp"><b>${esc(LIB[id][0])}</b><pre>${esc(LIB[id][1])}</pre><button type="button" class="gh" data-copy>Copy</button></div>`;
+const chev=`<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>`;
+function card(t){
+ const o=open.has(t.id),d=isDone(t.id),due=!d&&t.d<=tn;
+ return `<article class="task ${d?'done':''} ${due?'due':''} ${o?'open':''}" id="${t.id}"><div class="th" data-tog="${t.id}"><button type="button" class="tick ${d?'on':''}" data-tick="${t.id}" aria-label="${d?'Mark not done':'Mark done'}: ${esc(t.t)}">✓</button><div><h3>${esc(t.t)}</h3><div class="meta">Day ${t.d} · ${fd(t.d)} · ${t.m} min · <span class="who">${esc(t.who)}</span></div></div>${chev}</div>${o?`<div class="tb"><ol>${t.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol>${t.tools.length?`<div class="chips">${t.tools.map(k=>k==='writer'?`<a class="chip" href="#write">✎ Write tab</a>`:`<a class="chip" href="${TL[k].u}" target="_blank" rel="noopener">Open ${esc(TL[k].n)} ↗</a>`).join('')}</div>`:''}${t.copy.map(cpBlock).join('')}<textarea data-note="${t.id}" aria-label="Notes for ${esc(t.t)}" placeholder="Notes for ${esc(SHOP.adviser)} (optional)">${esc((st[t.id]||{}).note||'')}</textarea></div>`:''}</article>`;
+}
+function vToday(){
+ const day=Math.min(Math.max(tn,1),ND);let list=TASKS.filter(t=>t.d==day),head;
+ if(tn<1)head=`Starts ${fd(1)}`;else if(tn>ND)head=`The ${ND} days are over`;else head=`Day ${tn} of ${ND} · ${fd(tn)}`;
+ if(tn>=1&&tn<=ND&&!list.length){const nx=TASKS.find(t=>t.d>tn&&!isDone(t.id));list=nx?TASKS.filter(t=>t.d==nx.d):[];head=`Nothing new today · next is Day ${nx?nx.d:''}`}
+ if(tn<1)list=TASKS.filter(t=>t.d==1);
+ const late=TASKS.filter(t=>t.d<Math.min(tn,ND+1)&&!isDone(t.id)&&!list.includes(t));
+ const nxt=TASKS.filter(t=>t.d>Math.max(day,1)&&!list.includes(t)).slice(0,2);
+ const mins=list.filter(t=>!isDone(t.id)).reduce((s,t)=>s+t.m,0);
+ if(!open.size&&list.length){const f=list.find(t=>!isDone(t.id));if(f)open.add(f.id)}
+ let welcome=false;try{welcome=!localStorage.getItem('ns30welcome')&&doneN()<3}catch(e){welcome=doneN()<3}
+ const wkStart=new Date(now.getFullYear(),now.getMonth(),now.getDate()-((now.getDay()+6)%7)),wkEnd=new Date(wkStart.getTime()+7*864e5),iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+ const wp=posts.filter(p=>p.date>=iso(wkStart)&&p.date<iso(wkEnd)),wpDone=wp.filter(p=>p.status==='Posted').length;
+ const rW=replies.filter(r=>r.status==='Draft').length,eW=ob.filter(o=>o.status==='Draft').length;
+ const inbox=[wp.length?[`Posts this week: ${wpDone} of ${wp.length} posted`,'#write',wpDone<wp.length]:null,rW?[`${rW} review ${rW>1?'replies':'reply'} to approve`,'#write',true]:null,eW?[`${eW} email${eW>1?'s':''} to approve`,'#write',true]:null].filter(Boolean);
+ const welcomeCard=welcome?`<div class="card"><div class="row" style="justify-content:space-between"><h3>Welcome, ${esc(SHOP.owner)}</h3><button type="button" class="gh" id="wdone" style="min-height:36px;padding:2px 12px">Got it</button></div><ol style="margin:8px 0 0;padding-left:20px"><li><b>Tap the circle</b> on a step when it's done. Tapped by mistake? Press Undo.</li><li><b>Tap the step's title</b> to see how to do it, with buttons that open the right app.</li><li>Open <a href="#tools">Tools</a> and tick each account you can sign in to. Everything is done from the shop's own accounts.</li></ol><div class="muted" style="margin-top:6px">${esc(SHOP.adviser)} sees your ticks and notes. Nothing is ever posted or sent without you.</div></div>`:'';
+ const inboxCard=inbox.length?`<div class="card"><h3>Waiting for you</h3>${inbox.map(([t,h,w])=>`<a class="row" href="${h}" style="padding:8px 0;text-decoration:none;border-top:1px solid var(--line)"><span class="tick ${w?'':'on'}" style="width:26px;height:26px;font-size:13px" aria-hidden="true">✓</span><span>${esc(t)}</span><span class="muted" style="margin-left:auto">›</span></a>`).join('')}</div>`:'';
+ return welcomeCard+`<div class="card hero"><div class="eyebrow">${head}</div><h2>${list.length?(list.every(t=>isDone(t.id))?'All done for today':'Your steps for today'):'Well done'}</h2><div class="muted">${mins?`About ${mins} minutes · `:''}${doneN()} of ${TASKS.length} steps done</div><div class="beads" aria-hidden="true">${Array.from({length:ND},(_,i)=>{const d=i+1,ts=TASKS.filter(t=>t.d==d);const dn=ts.length&&ts.every(t=>isDone(t.id));return `<i class="${dn?'d':''} ${d==tn?'t':''}"></i>`}).join('')}</div></div>
+ ${inboxCard}
+ ${list.map(card).join('')}
+ ${tn>=1&&(now.getDay()===5||now.getDay()===6||tn>=ND)?sendCard():''}
+ ${late.length?`<div class="sec">Catch up · ${late.length} open from earlier</div>${late.map(card).join('')}`:''}
+ ${nxt.length?`<div class="sec">Coming next</div>${nxt.map(card).join('')}`:''}`;
+}
+function vPlan(){
+ const [,a,b]=WEEKS[week];const ts=TASKS.filter(t=>t.d>=a&&t.d<=b);
+ return `<div class="seg" role="group" aria-label="Filter by week">${WEEKS.map((w,i)=>`<button type="button" class="chip ${i===week?'on':''}" data-week="${i}">${w[0]}</button>`).join('')}</div><div class="muted" style="margin:0 4px 10px">${ts.filter(t=>isDone(t.id)).length} of ${ts.length} done · tap a step to see how</div>${ts.map(card).join('')}`;
+}
+function vWrite(){
+ const nP=posts.filter(p=>p.status!=='Posted').length,nR=replies.filter(r=>r.status!=='Posted').length;
+ const seg=`<div class="seg" role="group" aria-label="What to write">${[['week',`This week${nP?' · '+nP:''}`],['cap','Caption'],['rev',`Reviews${nR?' · '+nR:''}`],['lib','Ready text'],['mail','Emails']].map(([k,n])=>`<button type="button" class="chip ${wmode===k?'on':''}" data-wmode="${k}">${n}</button>`).join('')}</div>`;
+ if(wmode==='week')return seg+vWeek();
+ if(wmode==='lib')return seg+`<div class="muted" style="margin:0 4px 6px">Everything to paste, in one place.</div>`+Object.keys(LIB).map(k=>`<div class="card" style="padding:4px 14px 14px">${cpBlock(k)}</div>`).join('');
+ if(wmode==='mail')return seg+vMail();
+ const f=wmode==='cap'?`<label for="w-kind">What is it<select id="w-kind">${String(SHOP.kinds).split(',').map(x=>x.trim()).filter(Boolean).map(x=>`<option>${esc(x)}</option>`).join('')}</select></label><label for="w-det">Colour, fabric and work<input id="w-det" placeholder="e.g. deep red raw silk with hand embroidery"></label><label for="w-who">Made for<select id="w-who"><option>a bride</option><option>a groom</option><option>a bride and groom</option><option>a wedding guest</option><option>the family</option></select></label><label for="w-occ">Occasion (optional)<input id="w-occ" placeholder="e.g. wedding, engagement"></label>`:`<label for="r-text">Paste the review<textarea id="r-text" style="margin:0">Beautiful lehenga and great fitting, thank you Neena!</textarea></label><label for="r-stars">Stars<select id="r-stars"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></label>`;
+ const found=wmode==='rev'?vFound():'';
+ return seg+found+`<div class="card form">${wmode==='rev'?'<div class="row" style="justify-content:space-between"><h3>Reply to a Google or Facebook review</h3><a class="chip" href="https://business.google.com/reviews" target="_blank" rel="noopener">Open Google reviews ↗</a></div>':''}${f}<label for="w-lang">Language<select id="w-lang"><option>English</option><option>Thai</option><option>English and Thai</option></select></label><button type="button" id="w-go">Write it</button></div><div class="card out"><b>${wmode==='cap'?'Caption':'Reply'}</b><pre id="w-out">${esc(lastOut||'Press "Write it".')}</pre><div class="row"><button type="button" class="gh" id="w-copy">Copy</button><button type="button" class="gh" id="w-ask">Copy prompt for my ChatGPT</button></div><div class="muted" id="w-src" style="margin-top:8px"></div></div>`;
+}
+const PS=['Idea','Approved','Scheduled','Posted'];
+function vWeek(){
+ const list=posts.slice().sort((a,b)=>String(a.date||a.id).localeCompare(String(b.date||b.id)));
+ 
+ if(!list.length)return `<div class="card"><h3>This week's posts</h3><p class="muted">Every Sunday evening 3 post ideas for Mon, Wed and Fri appear here. Pull down or reopen the app on Monday morning to see them.</p></div>`;
+ return `<div class="muted" style="margin:0 4px 10px">Drafted by the content planner. Edit, approve, schedule in Meta Business Suite, then tap Posted.</div>`+list.map(p=>`<div class="card" data-post="${esc(p.id)}"><div class="row" style="justify-content:space-between"><div><div class="eyebrow">${esc(p.day||p.date||'')}</div><h3>${esc(p.idea||'Post')}</h3></div><span class="st ${p.status==='Posted'?'Sent':p.status==='Approved'||p.status==='Scheduled'?'Approved':''}">${esc(p.status||'Idea')}</span></div>${p.photo?`<div class="muted" style="margin-top:6px"><b>Photo to use:</b> ${esc(p.photo)}</div>`:''}${p.answers?`<div class="muted"><b>Answers the search:</b> ${esc(p.answers)}</div>`:''}<label style="margin-top:10px">Caption<textarea data-pf="caption" style="margin:0;min-height:150px">${esc(p.caption||'')}</textarea></label>${Array.isArray(p.slides)&&p.slides.length?`<div class="cp"><b>Carousel slides</b><pre>${esc(p.slides.map((s,i)=>`${i+1}. ${s}`).join('\n'))}</pre><button type="button" class="gh" data-copy>Copy</button></div>`:''}<div class="row" style="margin-top:10px"><button type="button" class="gh" data-pa="copy">Copy caption</button>${p.status==='Idea'||!p.status?'<button type="button" data-pa="Approved">Approve</button>':''}${p.status==='Approved'?'<button type="button" data-pa="Scheduled">Scheduled</button>':''}${p.status!=='Posted'?'<button type="button" class="gh" data-pa="Posted">Posted</button>':''}<a class="chip" href="https://business.facebook.com/" target="_blank" rel="noopener">Meta Business Suite ↗</a></div></div>`).join('');
+}
+function vFound(){
+ if(!dbr)return '';
+ const list=replies.slice().sort((a,b)=>(a.status==='Posted')-(b.status==='Posted')||String(b.found||'').localeCompare(String(a.found||'')));
+ const g=integ.google==='Connected';
+ return `<div class="card"><h3>New reviews</h3><div class="muted">Other review sites are checked every Thursday and a reply is drafted here. For a new Google review, paste it below and press Write it. You always post the reply yourself from the site's own login, then tap Posted.</div>${list.length?list.map(r=>{const goog=!!r.reviewName,st=r.status||'Draft';return `<div class="ob" data-rep="${esc(r.id)}"><div class="row" style="justify-content:space-between"><b>${esc(r.source||'Review')} · ${esc(r.reviewer||'')}${r.stars?' · '+esc(r.stars)+'★':''}</b><span class="st ${st==='Posted'?'Sent':st==='Approved'?'Approved':''}">${st==='Approved'&&goog?'Posting…':esc(st)}</span></div>${r.gist?`<div class="muted">${esc(r.gist)}</div>`:''}${r.error?`<div class="muted" style="color:var(--acc)">Couldn't post: ${esc(r.error)}</div>`:''}<label>Reply<textarea data-rf="reply" style="margin:0" ${st!=='Draft'?'readonly':''}>${esc(r.reply||'')}</textarea></label><div class="row"><button type="button" class="gh" data-ra="copy">Copy reply</button>${r.url?`<a class="chip" href="${esc(r.url)}" target="_blank" rel="noopener">Open ${esc(r.source||'page')} ↗</a>`:''}${st==='Draft'&&goog?'<button type="button" data-ra="Approved">Approve — post to Google</button>':''}${st==='Approved'&&goog?'<button type="button" class="gh" data-ra="Draft">Stop — back to draft</button>':''}${st!=='Posted'&&!goog?'<button type="button" data-ra="Posted">Posted</button>':''}</div></div>`}).join(''):'<p class="muted">No new reviews yet.</p>'}</div>`;
+}
+function vMail(){
+ const on=cfg.status=='Connected';const list=ob.slice().sort((a,b)=>OS.indexOf(a.status)-OS.indexOf(b.status)||(a.created||'').localeCompare(b.created||''));
+ return `<div class="card"><h3>Outbox</h3><div class="muted">Emails wait here until you approve them. Nothing is sent automatically — you send from the shop's own mailbox.${list.length?` · ${list.filter(o=>o.status=='Draft').length} to approve · ${list.filter(o=>o.status=='Sent').length} sent`:''}</div><div id="outbox">${list.length?list.map(o=>`<div class="ob" data-ob="${esc(o.id)}"><div class="row"><b>${esc(o.kind||'Email')}</b><span class="st ${esc((o.status||'Draft').split(' ')[0])}">${esc(o.status||'Draft')}</span></div>${o.hint?`<div class="muted">${esc(o.hint)}</div>`:''}<label>To<input data-f="to" value="${esc(o.to||'')}"></label><label>Subject<input data-f="subject" value="${esc(o.subject||'')}"></label><label>Message<textarea data-f="body">${esc(o.body||'')}</textarea></label><div class="row"><button type="button" class="gh" data-a="save">Save</button><button type="button" class="gh" data-a="copy">Copy email</button>${o.status=='Draft'?'<button type="button" data-a="approve">Approve</button>':''}${o.status=='Approved'?'<button type="button" class="gh" data-a="draft">Back to draft</button>':''}${o.status=='Approved'||o.status=='In email drafts'?'<button type="button" data-a="sent">Mark as sent</button>':''}</div></div>`).join(''):'<p class="muted">No emails yet.</p>'}</div>${dbr?'<button type="button" class="gh" id="ob-new" style="margin-top:12px">Add an email</button>':''}</div>
+ <details class="card"><summary><b>Email settings</b> · <span class="muted">${on?'Connected: '+esc(cfg.shopEmail||''):'Not connected'}</span></summary><div class="form" style="margin-top:12px"><label for="c-email">Shop email address<input id="c-email" inputmode="email" autocomplete="email" placeholder="e.g. hello@yourshop.com" value="${esc(cfg.shopEmail||'')}"></label><label for="c-name">Sender name<input id="c-name" value="${esc(cfg.senderName||'')}" placeholder="e.g. Neena Sehgal"></label><label for="c-sig">Signature<textarea id="c-sig" rows="3" style="margin:0">${esc(cfg.signature||`${SHOP.name}
+${SHOP.address}
+Tel ${SHOP.phone} · WhatsApp ${SHOP.whatsapp}`)}</textarea></label><label for="c-prov">Email service<select id="c-prov">${['Gmail','Outlook / Microsoft 365','Other'].map(x=>`<option ${cfg.provider===x?'selected':''}>${x}</option>`).join('')}</select></label><label for="c-auto">When connected<select id="c-auto"><option value="manual">Copy and send by hand</option><option value="drafts" ${cfg.mode==='drafts'?'selected':''}>Put approved emails into the shop's drafts</option></select></label><button type="button" id="c-save">Save settings</button></div></details>`;
+}
+function vTools(){
+ const ready=TOOLS.filter(t=>acc[t.id]).length;
+ return `<div class="card rule"><h2 style="font-size:22px">Your accounts, your shop</h2><ul><li>${esc(SHOP.adviser)} gives you this app, the plan and the words.</li><li>Every post, reply, listing and email is done from <b>the shop's own accounts</b>.</li><li>You keep full control: never share passwords, and nobody else needs access to your accounts. ${esc(SHOP.adviser)} trains you and supports you through this app.</li></ul></div>
+ <div class="muted" style="margin:0 4px 10px">${ready} of ${TOOLS.length} ready · tick "I can sign in" for each one you can open today</div>
+ <div class="card"><h3>Automations</h3><div class="row" style="padding:8px 0;border-bottom:1px solid var(--line)"><span class="st">You</span><span><b>Google reviews</b> — paste a new review in Write › Reviews, copy the reply, post it in Google Business Profile.</span></div><div class="row" style="padding:8px 0;border-bottom:1px solid var(--line)"><span class="st Approved">On</span><span><b>Weekly posts</b> — 3 post drafts every Sunday evening (Write › This week).</span></div><div class="row" style="padding:8px 0;border-bottom:1px solid var(--line)"><span class="st Approved">On</span><span><b>Search check</b> — every Monday (Progress).</span></div><div class="row" style="padding:8px 0"><span class="st Approved">On</span><span><b>Other review sites</b> — every Thursday (Write › Reviews).</span></div><div class="muted" style="margin-top:6px">Agents only draft. Nothing is ever posted or sent from your accounts by anyone but you.</div></div>
+ ${TOOLS.map(t=>{const days=TASKS.filter(x=>x.tools.includes(t.id)).map(x=>x.d);return `<div class="card tool"><div class="ic" style="background:${t.c}" aria-hidden="true">${t.l}</div><div><div class="row" style="justify-content:space-between"><h3>${esc(t.n)}</h3><span class="muted">${esc(t.cost)}</span></div><p>${esc(t.f)}</p><div class="acct"><b>Account:</b> ${esc(t.a)}</div>${days.length?`<div class="muted" style="margin-top:4px">Used on day ${[...new Set(days)].join(', ')}</div>`:''}<div class="row" style="margin-top:8px"><label class="ok"><input type="checkbox" data-acc="${t.id}" ${acc[t.id]?'checked':''}> I can sign in</label>${t.u?`<a class="chip" href="${t.u}" target="_blank" rel="noopener">Open ↗</a>`:''}</div></div></div>`}).join('')}
+ <details class="card"><summary><b>Help &amp; privacy</b></summary><div style="margin-top:8px"><p><b>Who sees this app?</b> Only you and ${esc(SHOP.adviser)}. It is private until shared.</p><p><b>What gets posted automatically?</b> Nothing. Agents only draft; you post everything yourself from your own accounts.</p><p><b>Where is my data?</b> Your ticks, notes, drafts and settings are stored with this app. Your passwords are never stored here.</p><p><b>Can I stop it?</b> Yes. Ask ${esc(SHOP.adviser)} to turn off any weekly agent. No outside service is connected to your accounts.</p><p><b>Something looks wrong?</b> Write it in the notes box of any step — ${esc(SHOP.adviser)} sees it.</p></div></details>`;
+}
+function vProgress(){
+ const B=PLAN.baseline||{},base=[{id:'0000',date:`${B.date||'Start'} (start)`,appears:+B.appears||0,top:+B.top||0}],N=NS();
+ const r=(checks&&checks.length?checks:base).slice().sort((a,b)=>a.id<b.id?-1:1),last=r[r.length-1];
+ const ready=TOOLS.filter(t=>acc[t.id]).length;
+ const tg=(PLAN.targets||[]).map(l=>{const [n,a='']=String(l).split('|').map(x=>x.trim());const [k,v]=a.split(':');let ok=false;if(k==='search')ok=(+last.appears||0)>=(+v||0);else if(k==='task')ok=isDone(v);else if(k==='outbox')ok=ob.some(o=>new RegExp(v,'i').test((o.kind||'')+(o.subject||''))&&o.status==='Sent');return [n,ok]});
+ return `<div class="kpi"><div><b>${Number(last.appears)||0}/${N}</b><span>Searches showing the shop (start ${+B.appears||0})</span></div><div><b>${Number(last.top)||0}</b><span>Times it's the first result (start ${+B.top||0})</span></div><div><b>${doneN()}/${TASKS.length}</b><span>Steps done</span></div><div><b>${ready}/${TOOLS.length}</b><span>Tools ready</span></div></div>
+ <div class="card"><h3>Weekly search check</h3><div class="muted" style="margin-bottom:6px">Every Monday an automatic check searches the ${N} phrases customers use and counts how often ${esc(SHOP.name)} shows up.</div>${r.map(c=>`<div class="prow"><span>${esc(c.date||c.id)}</span><div class="pbar"><i style="width:${(Number(c.appears)||0)/N*100}%"></i></div><b>${Number(c.appears)||0}/${N} · 1st in ${Number(c.top)||0}</b></div>`).join('')}${last.note?`<div class="muted" style="margin-top:8px">${esc(last.note)}</div>`:''}</div>
+ <div class="card"><h3>Day-${ND} targets</h3>${tg.map(([n,ok])=>`<div class="row" style="padding:6px 0"><span class="tick ${ok?'on':''}" style="width:28px;height:28px;font-size:14px" aria-hidden="true">✓</span><span>${n}</span></div>`).join('')}</div>
+ ${sendCard()}<div class="card"><h3>Your data on this phone</h3><div class="muted">Ticks, notes and approvals are saved on this phone only. Save a backup before you change or reset your phone.</div><div class="row" style="margin-top:10px"><button type="button" class="gh" id="bk-save">Save a backup file</button><label class="chip" style="cursor:pointer">Restore from file<input type="file" id="bk-load" accept="application/json" class="hidden"></label></div></div>`;
+}
+let amode='shop',owner=false,draft=null;
+function progressText(){const d=TASKS.filter(t=>isDone(t.id)),o=TASKS.filter(t=>!isDone(t.id)&&t.d<=tn),notes=TASKS.filter(t=>(st[t.id]||{}).note).map(t=>`- ${t.t}: ${st[t.id].note}`);
+ const pp=posts.filter(p=>p.status==='Posted').length,ready=TOOLS.filter(t=>acc[t.id]).length;
+ return `${SHOP.name} — progress, Day ${Math.max(1,Math.min(tn,ND))} of ${ND}\nSteps done: ${d.length}/${TASKS.length}${o.length?`\nStill open: ${o.map(t=>t.t).join('; ')}`:''}\nPosts posted: ${pp} · Tools ready: ${ready}/${TOOLS.length}${notes.length?`\nNotes:\n${notes.join('\n')}`:''}`}
+function sendCard(){const t=encodeURIComponent(progressText()),wa=String(SHOP.adviserWhatsapp||'').replace(/\D/g,'').replace(/^0/,'66');
+ return `<div class="card"><h3>Send progress to ${esc(SHOP.adviser)}</h3><div class="muted">Takes 5 seconds. Do it every Friday.</div><div class="row" style="margin-top:10px"><a class="chip on" href="https://wa.me/${wa}?text=${t}" target="_blank" rel="noopener">WhatsApp</a><a class="chip" href="https://line.me/R/share?text=${t}" target="_blank" rel="noopener">LINE</a><button type="button" class="gh" id="sp-copy">Copy</button></div></div>`}
+const SF=[['name','Business name'],['owner','Owner first name (used in greetings)'],['adviser','Your name (trainer / adviser)'],['adviserWhatsapp','Your WhatsApp number (for Send progress)'],['type','Business type'],['city','City'],['area','Area or landmark'],['address','Full address'],['hours','Opening hours'],['whatsapp','WhatsApp number'],['phone','Phone'],['instagram','Instagram handle (no @)'],['since','In business since'],['leadTime','Custom order lead time'],['products','What the business makes or sells'],['hashtags','Brand hashtags'],['kinds','Caption writer: product types (comma separated)'],['brand','Main colour (hex, e.g. #8e1330)'],['accent','Accent colour (hex)']];
+const inp=(id,v,lab,type='text')=>`<label for="${id}">${lab}<input id="${id}" type="${type}" value="${esc(v??'')}"></label>`;
+const area=(id,v,lab,rows=4)=>`<label for="${id}">${lab}<textarea id="${id}" rows="${rows}" style="margin:0">${esc(v??'')}</textarea></label>`;
+function exportAll(){return JSON.stringify({shop:SHOP,plan:PLAN,search:{phrases:SEARCH.phrases},tasks:{items:TASKS},lib:{items:LIB},tools:{items:TOOLS}},null,1)}
+function vAdmin(){
+ if(!owner)return `<div class="card"><p>Settings are managed by ${esc(SHOP.adviser)}.</p></div>`;
+ if(!draft)draft={tasks:JSON.parse(JSON.stringify(TASKS)),lib:JSON.parse(JSON.stringify(LIB)),tools:JSON.parse(JSON.stringify(TOOLS))};
+ const seg=`<div class="seg" role="group" aria-label="Settings section">${[['shop','Business'],['plan','Plan'],['steps','Steps'],['text','Ready text'],['tools','Tools'],['search','Searches'],['connect','Connections'],['backup','Backup & clone']].map(([k,n])=>`<button type="button" class="chip ${amode===k?'on':''}" data-amode="${k}">${n}</button>`).join('')}</div><div class="muted" style="margin:0 4px 10px">Changes here preview on this device only. To make them live for the client, open Backup &amp; clone, press Copy settings and send it to Claude ("update ${esc(CID)} config"), or upload it to GitHub as clients/${esc(CID)}/config.json.</div>`;
+ let b='';
+ if(amode==='shop')b=`<div class="card form">${SF.map(([k,l])=>inp('s-'+k,SHOP[k],l)).join('')}<button type="button" data-save="shop">Save business details</button></div>`;
+ if(amode==='plan'){const B=PLAN.baseline||{};b=`<div class="card form">${inp('p-title',PLAN.title,'Plan name (e.g. 30-day plan)')}${inp('p-start',PLAN.start,'Day 1 date','date')}${inp('p-days',PLAN.days,'Number of days','number')}<div class="grid2" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">${inp('p-bdate',B.date,'Baseline date')}${inp('p-bapp',B.appears,'Found in','number')}${inp('p-btop',B.top,'First in','number')}</div>${area('p-targets',(PLAN.targets||[]).join('\n'),'Targets — one per line. Optional auto-tick after "|": search:11 · task:t05 · outbox:masala',6)}<button type="button" data-save="plan">Save plan</button></div>`}
+ if(amode==='steps')b=draft.tasks.map((t,i)=>`<details class="card tedit" data-i="${i}" ${i===draft.open?'open':''}><summary><b>Day ${t.d}</b> · ${esc(t.t)} <span class="muted">· ${esc(t.who)}</span></summary><div class="form" style="margin-top:10px"><div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">${inp('',t.d,'Day','number').replace('<input','<input data-k="d"')}${inp('',t.m,'Minutes','number').replace('<input','<input data-k="m"')}${inp('',t.who,'Who').replace('<input','<input data-k="who"')}</div>${inp('',t.t,'Title').replace('<input','<input data-k="t"')}${area('',t.steps.join('\n'),'Steps — one per line',5).replace('<textarea','<textarea data-k="steps"')}${inp('',t.tools.join(', '),`Tool buttons (ids: writer, ${draft.tools.map(x=>x.id).join(', ')})`).replace('<input','<input data-k="tools"')}${inp('',t.copy.join(', '),`Ready text to show (keys: ${Object.keys(draft.lib).join(', ')})`).replace('<input','<input data-k="copy"')}<div class="row"><span class="muted">id ${esc(t.id)}</span><button type="button" class="gh" data-deltask="${i}" style="margin-left:auto">Delete step</button></div></div></details>`).join('')+`<div class="row"><button type="button" class="gh" id="addtask">Add a step</button><button type="button" data-save="steps">Save all steps</button></div>`;
+ if(amode==='text')b=Object.entries(draft.lib).map(([k,[ti,tx]])=>`<div class="card form ledit"><div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:8px">${inp('',k,'Key').replace('<input','<input data-k="key"')}${inp('',ti,'Title').replace('<input','<input data-k="title"')}</div>${area('',tx,'Text',5).replace('<textarea','<textarea data-k="text"')}<button type="button" class="gh" data-dellib="${esc(k)}">Delete</button></div>`).join('')+`<div class="row"><button type="button" class="gh" id="addlib">Add ready text</button><button type="button" data-save="text">Save ready text</button></div>`;
+ if(amode==='tools')b=draft.tools.map((t,i)=>`<details class="card toedit" data-i="${i}"><summary><b>${esc(t.n)}</b> <span class="muted">· ${esc(t.id)}</span></summary><div class="form" style="margin-top:10px"><div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">${[['id','Id'],['l','Icon letters'],['c','Icon colour']].map(([k,l])=>inp('',t[k],l).replace('<input',`<input data-k="${k}"`)).join('')}</div>${[['n','Name'],['f','What it is for'],['a','Which account'],['cost','Cost'],['u','Link (https://…)']].map(([k,l])=>inp('',t[k],l).replace('<input',`<input data-k="${k}"`)).join('')}<button type="button" class="gh" data-deltool="${i}">Delete tool</button></div></details>`).join('')+`<div class="row"><button type="button" class="gh" id="addtool">Add a tool</button><button type="button" data-save="tools">Save tools</button></div>`;
+ if(amode==='search')b=`<div class="card form">${area('q-lines',SEARCH.phrases.join('\n'),`Phrases customers type — one per line (${SEARCH.phrases.length} now). The Monday check searches these.`,12)}<button type="button" data-save="search">Save searches</button></div>`;
+ if(amode==='connect')b=`<div class="card"><h3>How this client works</h3><p class="muted">The client runs their own accounts. Agents only draft into this app; the client copies and posts everything themselves. No outside service is connected to their accounts.</p></div><div class="card"><h3>Weekly agents</h3><p class="muted">Monday search check · Sunday content planner · Thursday review watcher (public review sites) · Email assistant (only if the shop email is connected). They read the business details, searches and plan from these Settings. Turn them on or off in Claude › Scheduled tasks.</p></div>`;
+ if(amode==='backup')b=`<div class="card form"><h3>Export</h3><div class="muted">A copy of every setting. Use it as a backup, or paste it into a new client's app and change the business details — that's how you clone this for the next client.</div><textarea id="x-out" rows="8" readonly style="margin:0">${esc(exportAll())}</textarea><button type="button" class="gh" id="x-copy">Copy settings</button></div><div class="card form"><h3>Import</h3><textarea id="x-in" rows="6" style="margin:0" placeholder="Paste exported settings here"></textarea><div class="row"><button type="button" class="gh" id="x-def">Load the starter template</button><button type="button" id="x-apply">Import and save</button></div></div>`;
+ return seg+b;
+}
+function collectDraft(){
+ if(!draft)return;
+ if(amode==='steps')document.querySelectorAll('.tedit').forEach(el=>{const t=draft.tasks[+el.dataset.i],g=k=>el.querySelector(`[data-k="${k}"]`).value;Object.assign(t,{d:+g('d')||1,m:+g('m')||10,who:g('who').trim()||'You',t:g('t').trim()||'Step',steps:g('steps').split('\n').map(x=>x.trim()).filter(Boolean),tools:g('tools').split(',').map(x=>x.trim()).filter(Boolean),copy:g('copy').split(',').map(x=>x.trim()).filter(Boolean)})});
+ if(amode==='text'){const lib={};document.querySelectorAll('.ledit').forEach(el=>{const g=k=>el.querySelector(`[data-k="${k}"]`).value;const k=g('key').trim().replace(/[^\w-]/g,'');if(k)lib[k]=[g('title').trim()||k,g('text')]});draft.lib=lib}
+ if(amode==='tools')document.querySelectorAll('.toedit').forEach(el=>{const t=draft.tools[+el.dataset.i];el.querySelectorAll('[data-k]').forEach(x=>t[x.dataset.k]=x.value.trim())});
+}
+async function saveSet(name,obj){try{await dbr.doc('settings/'+name).set({...obj,updated:new Date().toISOString()});toast('Saved on this device — publish via Backup & clone');return true}catch(e){toast(e&&e.code==='invalid_argument'?'Only the app owner can change settings':'Could not save');return false}}
+async function adminSave(k){
+ if(k==='shop'){const o={};SF.forEach(([f])=>o[f]=$('s-'+f).value.trim());if(o.brand&&!/^#[0-9a-f]{6}$/i.test(o.brand)){toast('Main colour must look like #8e1330');return}return saveSet('shop',o)}
+ if(k==='plan')return saveSet('plan',{title:$('p-title').value.trim()||'30-day plan',start:$('p-start').value,days:+$('p-days').value||30,baseline:{date:$('p-bdate').value.trim(),appears:+$('p-bapp').value||0,top:+$('p-btop').value||0},targets:$('p-targets').value.split('\n').map(x=>x.trim()).filter(Boolean)});
+ if(k==='search'){const ph=$('q-lines').value.split('\n').map(x=>x.trim()).filter(Boolean);if(!ph.length){toast('Add at least one phrase');return}return saveSet('search',{phrases:ph})}
+ if(k==='connect'){if(!dbr)return;try{await dbr.doc('config/integrations').set({...integ,google:$('i-google').value,updated:new Date().toISOString()});toast('Saved')}catch(e){toast('Only the app owner can change this')}return}
+ collectDraft();
+ if(k==='steps'){const ids=new Set();for(const t of draft.tasks){if(ids.has(t.id)){toast('Two steps share an id');return}ids.add(t.id)}if(await saveSet('tasks',{items:draft.tasks}))draft=null}
+ if(k==='text'){if(await saveSet('lib',{items:draft.lib}))draft=null}
+ if(k==='tools'){const ids=draft.tools.map(t=>t.id);if(ids.some(x=>!x)||new Set(ids).size!==ids.length){toast('Every tool needs its own id');return}if(await saveSet('tools',{items:draft.tools}))draft=null}
+}
+async function importAll(txt){let o;try{o=JSON.parse(txt)}catch(e){toast('That is not valid settings text');return}
+ if(o&&Array.isArray(o.tasks))o.tasks={items:o.tasks};if(o&&o.lib&&!o.lib.items)o.lib={items:o.lib};if(o&&Array.isArray(o.tools))o.tools={items:o.tools};const ok=o&&typeof o==='object'&&o.shop&&o.tasks&&Array.isArray(o.tasks.items);if(!ok){toast('Missing business details or steps');return}
+ for(const [n,v] of [['shop',o.shop],['plan',o.plan],['search',o.search],['tasks',o.tasks],['lib',o.lib],['tools',o.tools]]){if(v)if(!await saveSet(n,v))return}
+ draft=null;toast('Imported and saved');render(true)}
+const VIEWS={today:['Today',vToday],plan:['Plan',vPlan],write:['Write',vWrite],tools:['Tools',vTools],progress:['Progress',vProgress],admin:['Settings',vAdmin]};
+let view='today';
+function route(){const h=location.hash.slice(1);if(VIEWS[h])view=h;else if(/^t\d\d$/.test(h)){const t=TASKS.find(x=>x.id===h);if(t){view='plan';week=0;open.add(h);setTimeout(()=>{const el=$(h);if(el)el.scrollIntoView({block:'start'})},50)}}render(true)}
+function render(force){
+ const m=$('main');
+ if(!force&&m.contains(document.activeElement)&&document.activeElement.matches('input,textarea,select')){pending=true;ring();return}
+ pending=false;$('ttl').textContent=VIEWS[view][0];
+ document.querySelectorAll('#tabs a').forEach(a=>a.toggleAttribute('aria-current',a.getAttribute('href')==='#'+view));
+ m.innerHTML=VIEWS[view][1]();ring();
+}
+function ring(){const n=doneN();$('rg').setAttribute('stroke-dasharray',`${n/TASKS.length*100} 100`);$('rgt').innerHTML=`${n}<br>/${TASKS.length}`}
+document.addEventListener('focusout',()=>setTimeout(()=>{if(pending&&!$('main').contains(document.activeElement))render(true)},0));
+addEventListener('hashchange',()=>{route();scrollTo(0,0)});
+const setSync=ok=>{$('sync').textContent=ok?`Your ticks and notes are saved on this phone. Tap "Send progress" to share them with ${SHOP.adviser}.`:'Offline — your ticks are still saved on this phone.'};
+const save=async id=>{if(!dbr)return;try{await dbr.doc('progress/'+id).set({done:!!st[id].done,note:st[id].note||'',at:new Date().toISOString()});setSync(true)}catch(e){denied(e);setSync(false)}};
+const OS=['Draft','Approved','In email drafts','Sent'];
+const sig=()=>cfg.signature||'';
+document.addEventListener('click',async e=>{
+ const tk=e.target.closest('[data-tick]');
+ if(tk){e.stopPropagation();if(ro){toast(`View-only access — ask ${SHOP.adviser} to make you an Editor`);return}const id=tk.dataset.tick,was=isDone(id);const flip=v=>{st[id]={...(st[id]||{}),done:v};if(v)open.delete(id);render(true);save(id)};flip(!was);toast(was?'Marked not done':'Nice — step done',()=>flip(was));return}
+ const tg=e.target.closest('[data-tog]');if(tg){const id=tg.dataset.tog;open.has(id)?open.delete(id):open.add(id);render(true);return}
+ const wk=e.target.closest('[data-week]');if(wk){week=+wk.dataset.week;render(true);return}
+ const wm=e.target.closest('[data-wmode]');if(wm){wmode=wm.dataset.wmode;lastOut='';render(true);return}
+ const cb=e.target.closest('button[data-copy]');if(cb){copy(cb.previousElementSibling.textContent,cb,'Copy');return}
+ const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.pa){const c=b.closest('[data-post]'),p=posts.find(x=>x.id==c.dataset.post);if(!p)return;const cap=c.querySelector('[data-pf=caption]').value;
+  if(b.dataset.pa==='copy')return copy(cap,b,'Copy caption');
+  try{await dbr.doc('posts/'+p.id).update({caption:cap,status:b.dataset.pa,updated:new Date().toISOString()});toast(b.dataset.pa==='Posted'?'Nice — marked as posted':'Marked '+b.dataset.pa.toLowerCase())}catch(err){toast('Could not save')}return}
+ if(b.dataset.ra){const c=b.closest('[data-rep]'),r=replies.find(x=>x.id==c.dataset.rep);if(!r)return;const rep=c.querySelector('[data-rf=reply]').value;
+  if(b.dataset.ra==='copy')return copy(rep,b,'Copy reply');
+  const ns=b.dataset.ra;
+  try{await dbr.doc('replies/'+r.id).update({reply:rep,status:ns,error:'',updated:new Date().toISOString()});toast(ns==='Approved'?'Approved — it will be posted to Google within the hour':ns==='Draft'?'Back to draft':'Marked as posted')}catch(err){denied(err);toast('Could not save')}return}
+ if(b.id==='wdone'){try{localStorage.setItem('ns30welcome','1')}catch(err){}render(true);return}
+ if(b.id==='undo'){const f=undoFn;undoFn=null;$('toast').classList.remove('on');if(f)f();return}
+ if(b.dataset.amode){collectDraft();amode=b.dataset.amode;render(true);return}
+ if(b.dataset.save)return adminSave(b.dataset.save);
+ if(b.id==='addtask'){collectDraft();let n=draft.tasks.length+1,id;do{id='t'+String(n++).padStart(2,'0')}while(draft.tasks.some(t=>t.id===id));draft.tasks.push({id,d:ND,t:'New step',m:10,who:'You',tools:[],steps:['Describe what to do'],copy:[]});draft.open=draft.tasks.length-1;render(true);return}
+ if(b.dataset.deltask){collectDraft();draft.tasks.splice(+b.dataset.deltask,1);draft.open=null;render(true);toast('Step removed — press Save all steps to keep this');return}
+ if(b.id==='addlib'){collectDraft();let k='text'+(Object.keys(draft.lib).length+1);draft.lib[k]=['New text',''];render(true);return}
+ if(b.dataset.dellib){collectDraft();delete draft.lib[b.dataset.dellib];render(true);return}
+ if(b.id==='addtool'){collectDraft();draft.tools.push({id:'tool'+(draft.tools.length+1),n:'New tool',c:'#555555',l:'T',f:'',a:"The business's own account.",cost:'Free',u:''});render(true);return}
+ if(b.dataset.deltool){collectDraft();draft.tools.splice(+b.dataset.deltool,1);render(true);return}
+ if(b.id==='x-copy')return copy($('x-out').value,b,'Copy settings');
+ if(b.id==='x-def'){$('x-in').value=JSON.stringify({shop:DEFAULTS.shop,plan:DEFAULTS.plan,search:DEFAULTS.search,tasks:{items:DEFAULTS.tasks},lib:{items:DEFAULTS.lib},tools:{items:DEFAULTS.tools}},null,1);return}
+ if(b.id==='sp-copy')return copy(progressText(),b,'Copy');
+ if(b.id==='bk-save'){const blob=new Blob([JSON.stringify({client:CID,saved:new Date().toISOString(),local:LOCAL},null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`${CID}-progress-backup.json`;document.body.appendChild(a);a.click();a.remove();toast('Backup saved to your downloads');return}
+ if(b.id==='x-apply')return importAll($('x-in').value);
+ if(b.id==='w-go')return write();
+ if(b.id==='w-copy')return copy($('w-out').textContent,b,'Copy');
+ if(b.id==='w-ask'){buildAsk();return copy(lastAsk,b,'Copy prompt for my ChatGPT')}
+ if(b.id==='c-save')return saveCfg();
+ if(b.id==='ob-new'){if(dbr)try{await dbr.collection('outbox').add({kind:'Other email',to:'',subject:'',body:'\n\n{signature}',status:'Draft',created:new Date().toISOString()})}catch(err){toast('Could not add')}return}
+ if(b.dataset.a){const card=b.closest('[data-ob]'),o=ob.find(x=>x.id==card.dataset.ob);if(!o)return;const vals={};card.querySelectorAll('[data-f]').forEach(el=>vals[el.dataset.f]=el.value);const a=b.dataset.a;
+  if(a=='copy')return copy(`To: ${vals.to}\nSubject: ${vals.subject}\n\n${(vals.body||'').replace('{signature}',sig())}`,b,'Copy email');
+  const status=a=='approve'?'Approved':a=='draft'?'Draft':a=='sent'?'Sent':o.status;const {id,...rest}=o;
+  try{document.activeElement.blur();await dbr.doc('outbox/'+id).set({...rest,...vals,status,updated:new Date().toISOString()});toast(a=='save'?'Saved':'Email '+status.toLowerCase())}catch(err){toast('Could not save')}}
+});
+document.addEventListener('change',e=>{
+ const t=e.target;
+ if(t.dataset.note){const id=t.dataset.note;st[id]={...(st[id]||{}),note:t.value};save(id);toast('Note saved')}
+ if(t.dataset.pf&&dbr){const id=t.closest('[data-post]').dataset.post;dbr.doc('posts/'+id).update({caption:t.value,updated:new Date().toISOString()}).then(()=>toast('Caption saved'),()=>toast('Could not save'))}
+ if(t.dataset.rf&&dbr){const id=t.closest('[data-rep]').dataset.rep;dbr.doc('replies/'+id).update({reply:t.value,updated:new Date().toISOString()}).then(()=>toast('Reply saved'),()=>toast('Could not save'))}
+ if(t.id==='bk-load'&&t.files&&t.files[0]){t.files[0].text().then(x=>{const o=JSON.parse(x);if(!o||!o.local||!o.local.docs)throw 0;LOCAL=o.local;persist();refresh();render(true);toast('Progress restored')}).catch(()=>toast('That file is not a progress backup'));return}
+ if(t.dataset.acc){acc={...acc,[t.dataset.acc]:t.checked};dbr.doc('config/tools').set(acc)}
+});
+async function copy(text,b,label){let ok=false;try{await navigator.clipboard.writeText(text);ok=true}catch(err){}b.textContent=ok?'Copied':'Select the text to copy';setTimeout(()=>b.textContent=label,1800)}
+async function saveCfg(){const em=$('c-email').value.trim();if(em&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){toast('That email address doesn’t look right');return}
+ if(!dbr){toast('Sign in to save settings');return}
+ try{await dbr.doc('config/email').set({shopEmail:em,senderName:$('c-name').value.trim(),signature:$('c-sig').value,provider:$('c-prov').value,mode:$('c-auto').value,status:cfg.status||'Not connected',updated:new Date().toISOString()});toast('Settings saved')}catch(err){toast('Could not save')}}
+const tags={'Bridal lehenga':'#BridalLehenga','Sherwani':'#SherwaniBangkok','Saree':'#SareeBangkok','Anarkali':'#Anarkali','Indo-Western outfit':'#IndoWestern','Wedding guest outfit':'#WeddingGuestLook',"Kids' outfit":'#KidsEthnicWear'};
+const tplCap=(k,d,w,o,l)=>{const S=SHOP;const en=`${k}${d?' in '+d:''}, made for ${w}${o?' for the '+o:''} in ${S.city}.\nMade in our ${S.area} studio${S.leadTime?`; custom orders take ${S.leadTime}`:''}.\nBook a fitting: WhatsApp ${S.whatsapp}\n${tags[k]||''} ${S.hashtags}`;const th=`${k}${d?' ('+d+')':''} ตัดเย็บที่ ${S.name} ${S.area} ${S.city}\nนัดลองชุด WhatsApp ${S.whatsapp}`;return l=='Thai'?th:l=='English'?en:en+'\n\n'+th};
+const tplRev=(s,l)=>{const good=Number(s)>=4;const en=good?`Thank you so much for your kind words! It was a joy to serve you, and we hope to see you again at ${SHOP.name}, ${SHOP.area}.`:`Thank you for your feedback, and we are sorry it was not the experience you expected. Please message us on WhatsApp ${SHOP.whatsapp} so we can make it right.`;const th=good?`ขอบคุณมากสำหรับรีวิวดี ๆ นะคะ หวังว่าจะได้พบกันอีกที่ ${SHOP.name} ค่ะ`:`ขอบคุณสำหรับความคิดเห็นค่ะ ขออภัยที่ยังไม่เป็นอย่างที่คาดหวัง รบกวนติดต่อเราทาง WhatsApp ${SHOP.whatsapp} เพื่อให้เราได้แก้ไขให้นะคะ`;return l=='Thai'?th:l=='English'?en:en+'\n\n'+th};
+let fall='';
+function buildAsk(){const l=$('w-lang').value;
+ if(wmode=='cap'){const k=$('w-kind').value,d=$('w-det').value.trim(),w=$('w-who').value,o=$('w-occ').value.trim();fall=tplCap(k,d,w,o,l);lastAsk=`Write one Instagram caption for ${SHOP.name}, a ${SHOP.type} at ${SHOP.address}${SHOP.since?', in business since '+SHOP.since:''}. Language: ${l} (if both, English first then Thai). Photo shows: ${k}; colour, fabric and details: ${d||'not given'}; made for ${w}; occasion: ${o||'not given'}. Line 1 says plainly what it is, for whom and that it was made in ${SHOP.city}. Line 2 gives one detail using only the facts given. Line 3 exactly: Book a fitting: WhatsApp ${SHOP.whatsapp}. Then 4 hashtags from: ${SHOP.hashtags}. Under 60 words per language. Warm, no exaggeration, no invented facts, no emoji. Return only the caption.`}
+ else{const r=$('r-text').value.trim(),s=$('r-stars').value;fall=tplRev(s,l);lastAsk=`Write a short reply from ${SHOP.name}, a ${SHOP.type} in ${SHOP.city}, to this ${s}-star review: """${r}""". Language: ${l} (if both, English first then Thai, polite ค่ะ). 2 to 3 sentences, warm and personal, mention something specific from the review. If 3 stars or fewer, apologise calmly and invite them to WhatsApp ${SHOP.whatsapp}. No invented facts. Return only the reply.`}}
+async function write(){
+ buildAsk();$('w-out').textContent='Writing…';$('w-src').textContent='';
+ lastOut=fall;$('w-out').textContent=fall;$('w-src').innerHTML='Written from the standard template. For a more personal version press <b>Copy prompt for my ChatGPT</b> and paste it into <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>.';
+}
+const CID=(new URLSearchParams(location.search).get('c')||(location.pathname.match(/\/clients\/([\w-]+)\//)||[])[1]||'neena').replace(/[^\w-]/g,'');
+const LKEY='vd:'+CID;let LOCAL={docs:{}},REMOTE={};
+try{LOCAL=JSON.parse(localStorage.getItem(LKEY)||'{"docs":{}}');if(!LOCAL.docs)LOCAL.docs={}}catch(e){LOCAL={docs:{}}}
+try{if(new URLSearchParams(location.search).get('admin')==='1')localStorage.setItem('vd:owner','1');owner=localStorage.getItem('vd:owner')==='1'}catch(e){}
+const persist=()=>{try{localStorage.setItem(LKEY,JSON.stringify(LOCAL))}catch(e){toast('Phone storage is full — save a backup')}};
+const coll=n=>{const out={};(REMOTE[n]||[]).forEach(d=>{if(d&&d.id)out[d.id]={...d}});for(const k in LOCAL.docs){const [c,id]=k.split('/');if(c===n)out[id]={...(out[id]||{id}),...LOCAL.docs[k],id}}return Object.values(out)};
+const docOf=p=>{const [c,id]=p.split('/');const r=(REMOTE[c]||[]).find(d=>d.id===id)||(REMOTE.doc&&REMOTE.doc[p])||{};return {...r,...(LOCAL.docs[p]||{})}};
+function refresh(){
+ st={};coll('progress').forEach(d=>st[d.id]={done:!!d.done,note:d.note||'',at:d.at});
+ checks=coll('checks');posts=coll('posts');replies=coll('replies');ob=coll('outbox');
+ cfg=docOf('config/email');integ={};acc={...docOf('config/tools')};delete acc.id;
+ const n={};['shop','plan','search','tasks','lib','tools'].forEach(k=>{const r=REMOTE.settings&&REMOTE.settings[k],l=LOCAL.docs['settings/'+k];if(r||l)n[k]={...(r||{}),...(l||{})}});SET=n;applySettings();
+}
+dbr={doc:p=>({set:async d=>{LOCAL.docs[p]={...d};persist();refresh();render()},update:async d=>{LOCAL.docs[p]={...docOf(p),...d};delete LOCAL.docs[p].id;persist();refresh();render()}}),collection:n=>({add:async d=>{const id='l'+Date.now().toString(36);LOCAL.docs[n+'/'+id]=d;persist();refresh();render();return{id}}})};
+$('gear').classList.toggle('hidden',!owner);
+refresh();route();
+(async()=>{
+ const get=async f=>{try{const r=await fetch(`clients/${CID}/${f}?v=${Date.now()}`,{cache:'no-store'});return r.ok?await r.json():null}catch(e){return null}};
+ const [conf,data]=await Promise.all([get('config.json'),get('data.json')]);
+ if(!conf&&!data){setSync(false)}
+ REMOTE={settings:conf||{},...(data||{})};refresh();render();setSync(true);
+})();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+{
+ "updated": "2026-11-15",
+ "checks": [
+  {
+   "id": "2026-11-14",
+   "date": "14 Nov",
+   "appears": 9,
+   "top": 1,
+   "total": 17,
+   "note": "Starting point: all 9 appearances came through the WedMeGood profile."
+  }
+ ],
+ "posts": [],
+ "replies": [],
+ "outbox": [
+  {
+   "id": "o-masala",
+   "kind": "Masala Thai story pitch",
+   "status": "Draft",
+   "to": "hottalk@masalathai.com",
+   "subject": "Story idea: Indian bridal couture in Bangkok since 1989",
+   "hint": "Day 9. Attach your 5 best photos when you send it. Address from Masala Thai's website.",
+   "created": "2026-11-14T06:52:01Z",
+   "body": "Dear Masala team,\n\nI enjoyed your feature on Indian wedding and festive outfits by Indian and Thai-based designers. I'd love to introduce Neena Sehgal, a Bangkok couture house designing Indian bridal wear since 1989 from our studio on Sukhumvit Soi 39.\n\nA few angles that may suit your readers:\n- How a custom bridal lehenga is made in Bangkok, from sketch to final fitting\n- Dressing for a Thai destination wedding: fabrics and silhouettes that work in the heat\n- Real brides: looks we created for weddings in Bangkok, shared with the couples' permission\n\nI've attached a few photos of our work, and we'd be happy to arrange an interview. We would also like to hear about exhibiting at the Masala Wedding Fair.\n\nWarm regards,\n{signature}"
+  },
+  {
+   "id": "o-planners",
+   "kind": "Wedding planner introduction",
+   "status": "Draft",
+   "to": "",
+   "subject": "Indian bridal couture for your Thailand weddings: Neena Sehgal, Bangkok",
+   "hint": "Day 11. Send one copy to each planner: I Do Etc., Krish Events, Revel Events, Keeran The Wedding Planner, Magnificence Events, Divine Events, Urbana Weddings and Events. Find each address on the planner's own website; attach the lookbook.",
+   "created": "2026-11-14T06:52:02Z",
+   "body": "Hello,\n\nI'm writing from Neena Sehgal, an Indian bridal couture house on Sukhumvit Soi 39, Bangkok, designing wedding outfits since 1989. We would love to be on your recommended vendor list for Indian weddings in Thailand.\n\nWe make custom bridal lehengas and sherwanis and outfits for the whole family, with fittings by appointment, and we ship within Thailand and abroad. I've attached our one-page lookbook. May we invite you for a studio visit?\n\nThank you,\n{signature}"
+  }
+ ]
+}

@@ -1,0 +1,625 @@
+{
+ "shop": {
+  "name": "Neena Sehgal",
+  "owner": "Neena",
+  "adviser": "Boonchoo",
+  "type": "Indian bridal couture boutique",
+  "city": "Bangkok",
+  "area": "Sukhumvit 39",
+  "address": "DS Tower 1, Soi Phrom Chit, Sukhumvit Soi 39, Bangkok",
+  "hours": "Monday to Saturday 10:00–18:00",
+  "whatsapp": "086 086 8385",
+  "phone": "02 258 1578",
+  "instagram": "neenasehgal_official",
+  "since": "1989",
+  "leadTime": "about 8 weeks",
+  "products": "bridal lehengas, sherwanis, sarees and custom wedding outfits",
+  "hashtags": "#BangkokBride #IndianWeddingThailand #NeenaSehgal",
+  "kinds": "Bridal lehenga, Sherwani, Saree, Anarkali, Indo-Western outfit, Wedding guest outfit, Kids' outfit",
+  "brand": "#8e1330",
+  "accent": "#d9a93a"
+ },
+ "plan": {
+  "title": "30-day plan",
+  "start": "2026-11-16",
+  "days": 30,
+  "baseline": {
+   "date": "14 Nov",
+   "appears": 9,
+   "top": 1
+  },
+  "targets": [
+   "Found in 11 of the searches | search:11",
+   "One Facebook page | task:t05",
+   "5 new Google reviews | ",
+   "3 new WedMeGood reviews | ",
+   "Masala Thai pitch sent | outbox:masala"
+  ]
+ },
+ "search": {
+  "phrases": [
+   "Best Indian clothing shop in Bangkok",
+   "Bridal lehengas in Thailand",
+   "Premium Indian wedding outfit Bangkok",
+   "Luxury bridal lehenga Bangkok",
+   "Indian bridal boutique Bangkok",
+   "Custom bridal lehenga Thailand",
+   "Designer Indian clothes Bangkok",
+   "Indian wedding clothes Bangkok",
+   "Sherwani Bangkok",
+   "Indian wedding guest outfit Bangkok",
+   "Designer saree Bangkok",
+   "Indian wedding clothing Sukhumvit",
+   "Indian wedding outfits Phuket",
+   "Indian wedding outfits Pattaya",
+   "Indo-Western wedding dress Thailand",
+   "Indian wedding outfits for men Bangkok",
+   "Where to buy lehenga in Bangkok"
+  ]
+ },
+ "tasks": {
+  "items": [
+   {
+    "id": "t01",
+    "d": 1,
+    "t": "Check the shop details",
+    "m": 10,
+    "who": "You",
+    "tools": [],
+    "steps": [
+     "Read these five details: address DS Tower 1, Soi Phrom Chit, Sukhumvit Soi 39 · hours Monday to Saturday 10:00 to 18:00, closed Sunday · WhatsApp 086 086 8385 · in business since 1989 · about 8 weeks for a custom bridal outfit.",
+     "If anything is wrong, write the right version in the notes box below.",
+     "Tick done. Boonchoo corrects the ready text if needed."
+    ],
+    "copy": []
+   },
+   {
+    "id": "t02",
+    "d": 1,
+    "t": "Approve the shop description",
+    "m": 5,
+    "who": "You",
+    "tools": [],
+    "steps": [
+     "Read the English and Thai description below. This same line goes on every listing.",
+     "Write any changes in the notes box, or leave it empty if it's right.",
+     "Tick done."
+    ],
+    "copy": [
+     "masterEN",
+     "masterTH"
+    ]
+   },
+   {
+    "id": "t03",
+    "d": 2,
+    "t": "Instagram: switch to a business account",
+    "m": 10,
+    "who": "You",
+    "tools": [
+     "instagram"
+    ],
+    "steps": [
+     "Open Instagram, go to your profile and tap the menu (three lines, top right).",
+     "Tap Settings and activity, then Account type and tools, then Switch to professional account. If you see 'Professional dashboard' on your profile already, skip to step 4.",
+     "Choose Business, and pick the category Bridal shop (or Clothing store if Bridal shop isn't offered).",
+     "Tick done."
+    ],
+    "copy": []
+   },
+   {
+    "id": "t04",
+    "d": 2,
+    "t": "Instagram: new bio and contact buttons",
+    "m": 15,
+    "who": "You",
+    "tools": [
+     "instagram"
+    ],
+    "steps": [
+     "Profile > Edit profile > Bio. Delete the old bio and paste the new one below.",
+     "In Edit profile, open Contact options: add phone 086 086 8385 (as WhatsApp if offered), the shop email and the address DS Tower 1, Sukhumvit Soi 39, Bangkok.",
+     "Save, then look at the profile from another phone to check it reads well.",
+     "Tick done."
+    ],
+    "copy": [
+     "igbio"
+    ]
+   },
+   {
+    "id": "t05",
+    "d": 3,
+    "t": "Facebook: merge the two pages",
+    "m": 15,
+    "who": "You",
+    "tools": [
+     "mbs"
+    ],
+    "steps": [
+     "Check you are an admin of both Facebook pages, and that both show the same name, category and address (Soi 39). Fix any difference first.",
+     "On a computer, go to facebook.com/pages/merge (or business.facebook.com/pages/merge if both pages are in Meta Business Suite).",
+     "Choose the main page to keep (the one with about 8,300 followers), then the duplicate, and request the merge. Facebook says it can't be undone and usually takes 24 to 48 hours.",
+     "Only likes, check-ins and ratings move across; posts on the duplicate don't. If Facebook refuses, post once on the duplicate asking people to follow the main page, then unpublish it.",
+     "Tick done and note what happened."
+    ],
+    "copy": []
+   },
+   {
+    "id": "t06",
+    "d": 3,
+    "t": "Facebook: fill in the page details",
+    "m": 20,
+    "who": "You",
+    "tools": [
+     "mbs"
+    ],
+    "steps": [
+     "On the main page, open Edit details (or Settings > Page setup).",
+     "Category: Bridal shop. Address: DS Tower 1, Soi Phrom Chit, Sukhumvit Soi 39. Hours: Monday to Saturday 10:00 to 18:00.",
+     "Add phone and a WhatsApp button, and link the Instagram account.",
+     "Paste the intro and the Thai About text below.",
+     "Tick done."
+    ],
+    "copy": [
+     "fbintro",
+     "fbabout"
+    ]
+   },
+   {
+    "id": "t07",
+    "d": 4,
+    "t": "Google: fix address, hours and description",
+    "m": 20,
+    "who": "You",
+    "tools": [
+     "gbp"
+    ],
+    "steps": [
+     "Sign in to the Google account that manages the shop, then search Google for Neena Sehgal Bangkok.",
+     "In the profile panel choose Edit profile.",
+     "Location: change to DS Tower 1, Soi Phrom Chit, Sukhumvit Soi 39 (it shows Soi 33 now). Google may ask you to verify again; follow its steps.",
+     "Hours: Monday to Saturday 10:00 to 18:00, Sunday closed. Category: Bridal shop.",
+     "Description: paste the long description below. Tick done."
+    ],
+    "copy": [
+     "longdesc"
+    ]
+   },
+   {
+    "id": "t08",
+    "d": 4,
+    "t": "Google: add photos and get the review link",
+    "m": 10,
+    "who": "You",
+    "tools": [
+     "gbp"
+    ],
+    "steps": [
+     "In the same profile, add 10 recent photos: shop front, studio, six outfits, a fitting.",
+     "Find Ask for reviews (or Get more reviews), copy the link and paste it in the notes box.",
+     "Tick done. Boonchoo puts the link into the review message."
+    ],
+    "copy": []
+   },
+   {
+    "id": "t09",
+    "d": 5,
+    "t": "Tripadvisor and WedMeGood: replace the description",
+    "m": 30,
+    "who": "You",
+    "tools": [
+     "trip",
+     "wmg"
+    ],
+    "steps": [
+     "Tripadvisor: sign in as the owner, open your listing's management page and replace 'Online Indian garment boutique' with the long description below. Set the hours.",
+     "WedMeGood: sign in to the vendor account, edit the profile: paste the same description, add your best new photos, check prices and contact.",
+     "Tick done."
+    ],
+    "copy": [
+     "longdesc"
+    ]
+   },
+   {
+    "id": "t10",
+    "d": 5,
+    "t": "Bing Places listing",
+    "m": 15,
+    "who": "You + Boonchoo",
+    "tools": [
+     "bing"
+    ],
+    "steps": [
+     "Bing is Microsoft's map listing, and ChatGPT's web search leans on it.",
+     "Sign in at Bing Places with the shop's own Microsoft or Google account (do this after Day 4). Boonchoo can sit with you.",
+     "Choose Import from Google Business Profile and confirm the details.",
+     "If a verification code arrives by phone or post, enter it. Tick done."
+    ],
+    "copy": []
+   },
+   {
+    "id": "t11",
+    "d": 6,
+    "t": "Instagram Highlights",
+    "m": 20,
+    "who": "You",
+    "tools": [
+     "instagram",
+     "canva"
+    ],
+    "steps": [
+     "Post a story for each of: Bridal, Groom & sherwani, Sarees, Real brides, Visit us (map, hours, WhatsApp).",
+     "On your profile, tap New (+) under Highlights and save each story into its own Highlight with that name.",
+     "Optional: make matching Highlight covers in Canva. Tick done."
+    ],
+    "copy": []
+   },
+   {
+    "id": "t12",
+    "d": 8,
+    "t": "Set up the review message for staff",
+    "m": 10,
+    "who": "You + staff",
+    "tools": [
+     "wab",
+     "line"
+    ],
+    "steps": [
+     "In WhatsApp Business: Settings > Business tools > Quick replies > Add. Shortcut: review. Paste the message below and put the Google review link (Day 4) in place of {Google review link}.",
+     "Do the same in LINE if you use it.",
+     "Agree with staff: send it to every bride on delivery day. Tick done."
+    ],
+    "copy": [
+     "reviewEN",
+     "reviewTH"
+    ]
+   },
+   {
+    "id": "t13",
+    "d": 8,
+    "t": "This week's posts: Mon, Wed, Fri",
+    "m": 45,
+    "who": "You",
+    "tools": [
+     "writer",
+     "mbs",
+     "instagram"
+    ],
+    "steps": [
+     "For each post, open the Write tab: choose the outfit, add colour, fabric and occasion, press Write it.",
+     "Check the details, then post the photo with the caption from Meta Business Suite so it goes to Instagram and Facebook together (you can schedule all three at once).",
+     "Tag the photographer, planner and venue if you know them. Tick done after the third post."
+    ],
+    "copy": []
+   },
+   {
+    "id": "t14",
+    "d": 9,
+    "t": "Masala Thai feature",
+    "m": 15,
+    "who": "You + Boonchoo",
+    "tools": [
+     "gmail"
+    ],
+    "steps": [
+     "Masala Thai is Bangkok's Indian community magazine. Its list of Bangkok designers shows up in 14 of the 17 searches and doesn't include Neena Sehgal yet.",
+     "The pitch email is ready in Write › Emails. Read it, change anything you like, and press Approve.",
+     "Send it from the shop's email with your 5 best photos attached (bride, groom, family look, a sketch, the studio), then press Mark as sent.",
+     "Tick done. Boonchoo reminds you to follow up a week later."
+    ],
+    "copy": []
+   },
+   {
+    "id": "t15",
+    "d": 11,
+    "t": "Lookbook and wedding-planner messages",
+    "m": 20,
+    "who": "You + Boonchoo",
+    "tools": [
+     "canva",
+     "wab",
+     "gmail"
+    ],
+    "steps": [
+     "Choose 12 photos that show your range: bridal, groom, family, guest, and send them to Boonchoo.",
+     "Boonchoo makes a one-page lookbook (in the shop's Canva) and puts the planner message in Write › Emails.",
+     "Send it to the seven Bangkok planners from the shop's WhatsApp or email.",
+     "Tick done."
+    ],
+    "copy": []
+   },
+   {
+    "id": "t16",
+    "d": 15,
+    "t": "This week's posts: Mon, Wed, Fri",
+    "m": 45,
+    "who": "You",
+    "tools": [
+     "writer",
+     "mbs",
+     "instagram"
+    ],
+    "steps": [
+     "Same as last week: Write tab, then post from Meta Business Suite to Instagram and Facebook, and tag.",
+     "Tick done after the third post."
+    ],
+    "copy": []
+   },
+   {
+    "id": "t17",
+    "d": 16,
+    "t": "Ask two brides for a real-wedding feature",
+    "m": 15,
+    "who": "You",
+    "tools": [
+     "wab"
+    ],
+    "steps": [
+     "Pick two recent weddings with good photos.",
+     "Send the message below to each couple from the shop's WhatsApp.",
+     "Note in the box: couple, wedding date, venue, planner, photographer. Tick done."
+    ],
+    "copy": [
+     "permission"
+    ]
+   },
+   {
+    "id": "t18",
+    "d": 18,
+    "t": "Submit the real weddings",
+    "m": 30,
+    "who": "You + Boonchoo",
+    "tools": [
+     "wmg"
+    ],
+    "steps": [
+     "Sign in to the shop's WedMeGood vendor account, and open WeddingSutra's real-wedding submission. Boonchoo can sit with you.",
+     "Fill in 'Outfits: Neena Sehgal, Bangkok' and upload the photos the couples agreed to.",
+     "Tick done when submitted."
+    ],
+    "copy": []
+   },
+   {
+    "id": "t19",
+    "d": 20,
+    "t": "Reply to every review",
+    "m": 15,
+    "who": "You",
+    "tools": [
+     "writer",
+     "gbp",
+     "mbs"
+    ],
+    "steps": [
+     "Open Write › Reviews: drafted replies for review sites are waiting there.",
+     "For each new Google review or Facebook recommendation, paste it in Write › Reviews, press Write it, check, copy and post it from that site. Reply to the unhappy ones too, calmly.",
+     "Tick done."
+    ],
+    "copy": []
+   },
+   {
+    "id": "t20",
+    "d": 22,
+    "t": "This week's posts: Mon, Wed, Fri",
+    "m": 45,
+    "who": "You",
+    "tools": [
+     "writer",
+     "mbs",
+     "instagram"
+    ],
+    "steps": [
+     "Same routine: Write tab, post from Meta Business Suite, tag.",
+     "Tick done after the third post."
+    ],
+    "copy": []
+   },
+   {
+    "id": "t21",
+    "d": 25,
+    "t": "Count the new reviews",
+    "m": 5,
+    "who": "You",
+    "tools": [
+     "gbp",
+     "wmg"
+    ],
+    "steps": [
+     "Count new Google reviews since 16 November and new WedMeGood reviews.",
+     "Write both numbers in the notes box. Targets: 5 Google, 3 WedMeGood. Tick done."
+    ],
+    "copy": []
+   },
+   {
+    "id": "t22",
+    "d": 29,
+    "t": "ChatGPT check",
+    "m": 60,
+    "who": "Boonchoo",
+    "tools": [],
+    "steps": [
+     "Boonchoo asks ChatGPT the 17 searches in fresh sessions and records whether Neena Sehgal is named.",
+     "The result appears in Progress."
+    ],
+    "copy": []
+   },
+   {
+    "id": "t23",
+    "d": 30,
+    "t": "30-day review together",
+    "m": 20,
+    "who": "You + Boonchoo",
+    "tools": [],
+    "steps": [
+     "Look at Progress and the ticks together.",
+     "Decide what to keep doing and what's next for the following 30 days. Tick done."
+    ],
+    "copy": []
+   }
+  ]
+ },
+ "lib": {
+  "items": {
+   "masterEN": [
+    "Shop description (English)",
+    "Neena Sehgal is an Indian bridal couture boutique in Bangkok, designing bridal lehengas, sherwanis, sarees and custom wedding outfits since 1989. DS Tower 1, Soi Phrom Chit, Sukhumvit Soi 39."
+   ],
+   "masterTH": [
+    "Shop description (Thai)",
+    "Neena Sehgal ห้องเสื้อชุดอินเดียสำหรับงานแต่งงานในกรุงเทพฯ ออกแบบชุดเจ้าสาวเลเฮงก้า ชุดเชอร์วานีเจ้าบ่าว ส่าหรี และชุดงานแต่งตัดตามสั่ง ตั้งแต่ปี 1989 อาคาร DS Tower 1 ซอยพร้อมจิต สุขุมวิท 39"
+   ],
+   "igbio": [
+    "Instagram bio",
+    "Indian bridal couture since 1989\nLehengas · Sherwanis · Sarees · Custom\nDS Tower 1, Sukhumvit 39, Bangkok\nWhatsApp 086 086 8385 · Mon–Sat 10–6"
+   ],
+   "fbintro": [
+    "Facebook intro",
+    "Indian bridal couture since 1989 · Lehengas, sherwanis, sarees · Sukhumvit 39, Bangkok"
+   ],
+   "fbabout": [
+    "Facebook About (Thai)",
+    "ห้องเสื้อ Neena Sehgal ออกแบบและตัดเย็บชุดอินเดียสำหรับงานแต่งงานมาตั้งแต่ปี 1989 ทั้งชุดเจ้าสาวเลเฮงก้า ชุดเชอร์วานีเจ้าบ่าว ส่าหรี และชุดสำหรับแขกในงาน รับออกแบบตามสั่งและจัดส่งต่างประเทศ\nอาคาร DS Tower 1 ซอยพร้อมจิต สุขุมวิท 39 กรุงเทพฯ (มีที่จอดรถ)\nเปิดจันทร์–เสาร์ 10.00–18.00 น. นัดลองชุดทาง WhatsApp / โทร 086 086 8385"
+   ],
+   "longdesc": [
+    "Long description: Google, WedMeGood, Tripadvisor",
+    "Neena Sehgal is an Indian bridal couture boutique in Bangkok, creating wedding outfits since 1989. We design and make bridal lehengas, sherwanis for grooms, sarees, anarkalis and Indo-Western looks, plus outfits for the whole wedding party. Choose a ready-to-wear piece or a fully custom bridal outfit (allow about 8 weeks). We dress brides from Bangkok's Indian community and couples planning destination weddings in Thailand, and we ship abroad. Visit our studio at DS Tower 1, Soi Phrom Chit, Sukhumvit Soi 39, with parking available. Fittings by appointment, Monday to Saturday."
+   ],
+   "reviewEN": [
+    "Review request (English)",
+    "Hi {name}, thank you for choosing Neena Sehgal for your wedding. If you loved your outfit, a short Google review would mean a lot to our team and helps other brides find us: {Google review link}\nIf you share photos, please tag @neenasehgal_official. Thank you!"
+   ],
+   "reviewTH": [
+    "Review request (Thai)",
+    "สวัสดีค่ะ คุณ{ชื่อ} ขอบคุณที่ไว้วางใจให้ Neena Sehgal ดูแลชุดในวันสำคัญนะคะ ถ้าประทับใจ รบกวนช่วยเขียนรีวิวสั้น ๆ บน Google ให้หน่อยนะคะ จะช่วยให้เจ้าสาวคนอื่นหาเราเจอง่ายขึ้น {ลิงก์รีวิว}\nถ้าโพสต์รูป ฝากแท็ก @neenasehgal_official ด้วยนะคะ ขอบคุณมากค่ะ"
+   ],
+   "permission": [
+    "Real-wedding permission message",
+    "Hi {name}, your wedding looked beautiful! We'd love to share it as a 'real wedding' on WedMeGood or WeddingSutra, with your outfits credited to Neena Sehgal. May we use your photos, and could you share your photographer's name so we credit them too? Only if you're happy to. Thank you!"
+   ]
+  }
+ },
+ "tools": {
+  "items": [
+   {
+    "id": "portal",
+    "n": "This app",
+    "c": "#8e1330",
+    "l": "N",
+    "f": "Tick steps, write notes, get captions, approve emails, see progress.",
+    "a": "No account needed. Open the link on your phone and add it to your home screen.",
+    "cost": "Free",
+    "u": ""
+   },
+   {
+    "id": "instagram",
+    "n": "Instagram",
+    "c": "#c13584",
+    "l": "IG",
+    "f": "Posts, bio, Highlights, replying to DMs.",
+    "a": "Shop account @neenasehgal_official, switched to Business.",
+    "cost": "Free",
+    "u": "https://www.instagram.com/"
+   },
+   {
+    "id": "mbs",
+    "n": "Meta Business Suite",
+    "c": "#1877f2",
+    "l": "M",
+    "f": "Post to Instagram and Facebook together, schedule the week's posts, one inbox for all messages, merge the two Facebook pages.",
+    "a": "The shop's own Facebook page, with the owner as admin.",
+    "cost": "Free app",
+    "u": "https://business.facebook.com/"
+   },
+   {
+    "id": "gbp",
+    "n": "Google Business Profile",
+    "c": "#34a853",
+    "l": "G",
+    "f": "Address, hours, photos, review link, replying to Google reviews.",
+    "a": "The shop's own Google account that manages the listing.",
+    "cost": "Free",
+    "u": "https://business.google.com/"
+   },
+   {
+    "id": "wab",
+    "n": "WhatsApp Business",
+    "c": "#25d366",
+    "l": "W",
+    "f": "Quick reply '/review' after every delivery, labels for brides, catalogue of outfits.",
+    "a": "Shop number 086 086 8385.",
+    "cost": "Free app",
+    "u": "https://business.whatsapp.com/"
+   },
+   {
+    "id": "line",
+    "n": "LINE Official Account",
+    "c": "#06c755",
+    "l": "L",
+    "f": "Same review message and broadcasts, if the shop uses LINE.",
+    "a": "Shop's LINE OA (only if you already use one).",
+    "cost": "Free plan",
+    "u": "https://manager.line.biz/"
+   },
+   {
+    "id": "canva",
+    "n": "Canva",
+    "c": "#00c4cc",
+    "l": "C",
+    "f": "Carousel posts, story Highlight covers, the planner lookbook.",
+    "a": "Shop's own free Canva account.",
+    "cost": "Free",
+    "u": "https://www.canva.com/"
+   },
+   {
+    "id": "ai",
+    "n": "ChatGPT or Claude",
+    "c": "#10a37f",
+    "l": "AI",
+    "f": "Longer posts, ideas, Thai/English translation. In Write, press 'Copy prompt' and paste it in.",
+    "a": "The owner's own free account.",
+    "cost": "Free (paid optional)",
+    "u": "https://chatgpt.com/"
+   },
+   {
+    "id": "gmail",
+    "n": "Shop email",
+    "c": "#ea4335",
+    "l": "@",
+    "f": "Send the Masala Thai pitch and the wedding-planner emails.",
+    "a": "The shop's own mailbox.",
+    "cost": "Free",
+    "u": "https://mail.google.com/"
+   },
+   {
+    "id": "trip",
+    "n": "Tripadvisor",
+    "c": "#00af87",
+    "l": "T",
+    "f": "Replace the 'online garment boutique' description, set hours.",
+    "a": "Shop's Tripadvisor owner login.",
+    "cost": "Free",
+    "u": "https://www.tripadvisor.com/Owners"
+   },
+   {
+    "id": "wmg",
+    "n": "WedMeGood",
+    "c": "#e72e77",
+    "l": "WG",
+    "f": "Description, new photos, ask for reviews, submit real weddings.",
+    "a": "Shop's WedMeGood vendor login.",
+    "cost": "Free basic",
+    "u": "https://www.wedmegood.com/"
+   },
+   {
+    "id": "bing",
+    "n": "Bing Places",
+    "c": "#008373",
+    "l": "B",
+    "f": "Copy the Google listing to Bing — ChatGPT's web search leans on Bing.",
+    "a": "Sign in with the shop's own Microsoft or Google account.",
+    "cost": "Free",
+    "u": "https://www.bingplaces.com/"
+   }
+  ]
+ }
+}
